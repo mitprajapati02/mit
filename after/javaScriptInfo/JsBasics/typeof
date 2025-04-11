@@ -1,0 +1,559 @@
+typeof
+String(value)
+Number(value)
+Boolean(value)
++value
+!!value
+
+OR - first truthy
+And - first falsy
+Nullish ?? first defined
+
+LabelName: for() {break LabelName}
+
+new Object()
+obj.key =value;
+delete obj.key;
+"key" in obj
+for(let key in obj) {}
+Object.assign(dest , ...sources)
+structuredClone(obj)
+_.cloneDeep(obj)
+
+computed Properties [variable]
+
+Constructor Function - function Name(){ this.key = value; // this{}}
+
+optional chaining obj?.key
+
+
+Object - properties can store values and function - ex. dataes,Errors , html elements
+
+primitive as object - object wrappers - new String(), new Number()
+
+
+#Number
+.toString(base)
+Math.floor(),ceil(),round(),trunc(),toFixed()   .min(),max(),random()
+
+isFinite(),isNaN()
+Number.isNaN(),Number.isFinite() dont convert to number
+Object.is() - NaN === NaN, 0 === -0
+parseInt(),parseFloat()
+
+#String
+.length
+.charAt(index),charCodeAt(index)
+.toLowerCase(),toUpperCase()
+.indexOf(),lastIndexOf(),includes(),startsWith(),endsWith()
+slice(start,end),substring(start,end),substr(start,length)
+localeCompare(str2)
+.split(separator,limit),join(separator) // gives array
+.trim(),trimStart(),trimEnd() // remove white spaces
+
+#Array
+.length
+.at(-1)
+.push(),pop(),shift(),unshift()
+new Array(n)
+arr.toString()
+.indexOf(item, from),includes(item,from),find(fn),findIndex(fn)
+.forEach(fn),map(fn),filter(fn)
+.sort((a,b)=>a-b),reverse(),slice(start,end),splice(start,deleteCount,items)
+.concat(arr),join(separator),fill(value,start,end)
+arr.reduce()
+Array.isArray(arr)
+.fill(value,start,end),copyWithin(target,start,end),.flat(depth)
+
+#Iterables and Array-Likes
+Array.from(iterable, mapFn, thisArg)
+Array.from(str).slice(start,end).join('');
+
+#Map and Set
+let map = new Map()
+map.set(key,value),get(key),has(key),delete(key),clear()
+map.size
+map.keys(),values(),entries()
+map.forEach((value,key,map)=>{})
+
+let obj = Object.fromEntries(map)
+let map = new Map(Object.entries(obj))
+
+let set = new Set()
+set.add(value),has(value),delete(value),clear()
+set.size
+for(let value of set) {}
+set.forEach((value,value2,set)=>{})
+
+
+#WeakMap and WeakSet
+let weakMap = new WeakMap()
+let weakSet = new WeakSet()
+WeakMap.set(key,value),get(key),has(key),delete(key)
+WeakSet.add(value),has(value),delete(value)
+
+#Object
+Object.keys(obj),values(obj),entries(obj)
+Object.getOwnPropertySymbols(obj)
+Reflect.ownKeys(obj)
+
+Object.entries(obj).map(([key,value])=>[key,value])
+Object.fromEntries(arr)
+
+#Destructuring
+"unpack" arrays or objects into a bunch of variables
+Works with Any Iterables
+let [a,b] = "ab" // ["a","b"] // new Set([a,b])
+Swap variable trick = [a,b] = [b,a]
+using rest operator - let [a,...rest] = [1,2,3,4,5]
+default values - let [a=1,b=2] = [3] // a=3,b=2
+destructuring object - let {var1,var2} = {var1:1,var2:2}
+new variable names - let {var1:newName} = {var1:1}
+default values - let {width: w = 100, height: h = 100} = {width: 200}
+without let () required - let a,b; ({a,b} = {a:1,b:2})
+smart function parameters
+Handling Default values for entire obje 
+     function showName({name = "Anonymous"} = {}) {alert(name);}
+
+#Date
+new Date(), new Date(milliseconds), new Date(datestring)
+new Date(year,month,day,hour,min,sec,msec)
+
+Date components - getFullYear(),getMonth(),getDate(),getHours(),getMinutes(),getSeconds(),getMilliseconds(),getDay()
+UTC versions - getUTCFullYear(),getUTCMonth(),getUTCDay()
+getTime(),getTimezoneOffset()
+
+setting Date components - setFullYear(year, [month], [date]),setMonth(month, [date]),setDate(date),setHours(hour, [min], [sec], [ms]),setMinutes(min, [sec], [ms]),setSeconds(sec, [ms]),setMilliseconds(ms),setTime(milliseconds)
+#Auto-correction
+#Date to Number & Date Difference
+#Date.now() - current timestamp // faster than new Date().getTime()
+
+#JSON Methods
+JSON.stringify(obj) // skips functions,undefined,symbolic properties,circular references
+let obj = JSON.parse(json)
+JSON.stringify(value[, replacer, space])
+JSON.stringify(user, function(key, value) {
+    return key == "age" ? undefined : value;
+  })
+Custom toJSON() method - obj.toJSON = function() {return this.value;}
+reviver function - JSON.parse(json, function(key, value) {
+    return key == "date" ? new Date(value) : value;
+})
+
+#Recursion
+function pow(x, n) {
+  return (n == 1) ? x : (x * pow(x, n - 1));
+}
+
+#Execution Context and Call Stack
+execution stack:
+Context: { x: 2, n: 1 } → pow(2, 1)
+Context: { x: 2, n: 2 } → pow(2, 2)
+Context: { x: 2, n: 3 } → pow(2, 3)
+#Recursive Structures - partially replicates itself
+#Linked List - recursively defined object - value,next , next can be null or next element
+Alernative Creation - let list = {value: 1,next: {value: 2,next: {value: 3,next: {value: 4,next: null}}}};
+or 
+let list = {value: 1,next: list2};let list2 = {value: 2,next: list3};
+let list = { value:1 }, list.next = { value:2 }, list.next.next = { value:3 }
+#modifying linked list 
+splitting a list - let secondList = list.next.next;list.next.next = null;
+joining a list - list.next.next = secondList;
+prepending an element - list = {value: 0, next: list};
+Removing an element - list.next = list.next.next;
+#pros-Efficient insertions/removals. cons-inefficient element access
+
+#rest parameters - function sum(...args){for(let arg of args)}
+#Arguments Object - array-like object conating all arguments passed to the function
+#Difference - arguments is not an array, rest parameters create real arrays
+#spread Syntax - (...) expands an iterable object into a list of arguments
+#Array.from() - creates a new shallow-copied Array instance from an array-like or iterable object
+#Array.from(str).slice(start,end).join('') - converts string to array and back
+let merged = [...arr1,...arr2] // merge arrays
+#copying arrays/objects - let arr2 = [...arr1], let obj2 = {...obj1}
+
+#variable scope and closure
+#lexical environment - where variables live and how they relate to each other in nested functions , stores local variables and a reference to its parent environment
+#closure - function remembers its lexical environment even when the function is executed outside that lexical environment or function that remembers its outer variables
+#closures allow functions to retain access to variables even after the outer function has finished executing.
+
+#garbage collection - automatic memory management, removes objects that are no longer needed
+#var - no block scope,tolerates redeclaration, declared after hoisting
+#IIFE - Immediately Invoked Function Expression - (function(){})()
+
+#Global Object - window in browser, global in node
+properties of global object accessed directly - alert() == window.alert()
+variables declared with var become properties of global object
+global declaration // window.currentUser = {name: "John"};//currentUser.name //John
+# Using Global Object for Polyfills
+- The global object can be used to define missing functionality in older browsers
+
+#Function Object
+name property - returns function’s name, even for default parameters //fn.name
+Functions inside arrays have an empty name //arr[0].Name
+length property - returns the number of function parameters (excluding rest parameters) //fn.length
+Functions as Objects - functions can have properties //fn.counter 
+function sayHi(){sayHi.counter++} //sayHi.counter = 0; sayHi(); sayHi(); sayHi.counter // properties are not local variables and persist across calls
+Named Function Expressions (NFE) - function can reference itself using an internal name //let sayHi = function func(who) {func("Guest");}; sayHi();
+function declarations do not support internal names
+
+#new Funtion syntax - let func = new Function ([arg1, arg2, ...argN], functionBody);
+creates functions from a string at runtime , no closure, only global variables's access
+
+#Scheduling - setTimeout & setInterval
+setTimeout(func, delay, ...args) - runs a function once after delay
+setInterval(func, delay, ...args) - runs a function repeatedly with delay
+always pass a function reference - setTimeout(sayHi, 1000); ✅ (Not sayHi())
+clearTimeout(timerId); – Stops setTimeout., clearInterval(timerId); – Stops setInterval
+Nested setTimeout (More Precise than setInterval) - setTimeout(function tick() {alert('tick');setTimeout(tick, 2000);}, 2000);
+Zero Delay setTimeout(func, 0) - runs after the current script finishes, actual delay > 0ms due to event loop
+
+#Decorators and forwarding, call/apply
+func.call(this, x) makes sure func runs in the same this context as the returned function.
+func.apply(this, args) does the same, but receives an array of args.
+func.bind(this) returns a “bound variant” of the function, with the fixed this.
+func.bind(this, arg1, arg2, ...) also fixes the first arguments.
+func.call(context, …args) calls func with this=context and given arguments.
+#Transparent Caching - cache results of function calls to avoid recalculations
+function cachingDecorator(func) {
+     let cache = new Map();
+     return function(x) {
+       if (cache.has(x)) return cache.get(x);
+       let result = func.call(this, x);
+       cache.set(x, result);
+       return result;
+     };
+   }func.call(this, x)` to ensure `this` is preserved.func.call(context, arg1, arg2, …)` explicitly sets `this`.
+#Function Binding (bind) - prevents loss of this in callbacks
+let user = {
+     firstName: "John",
+     sayHi() { alert(`Hello, ${this.firstName}!`); }
+   };
+   let boundSayHi = user.sayHi.bind(user);
+   setTimeout(boundSayHi, 1000);
+
+obj = {
+  value: 42,
+  getValue(x) {
+    console.log("Computing...", x);
+    return this.value + x;
+  }
+};
+
+let cachedGetValue = cachingDecorator(obj.getValue);
+
+console.log(cachedGetValue(2)); // Error: Cannot read properties of undefined (reading 'value')
+console.log(cachedGetValue.call(obj, 2));
+
+Partial Functions
+- Bind fixes arguments along with `this`.
+  function partial(func, ...argsBound) {
+    return function(...args) {
+      return func.call(this, ...argsBound, ...args);
+    };
+  }
+  let user = {
+    firstName: "John",
+    say(time, phrase) {
+      alert(`[${time}] ${this.firstName}: ${phrase}`);
+    }
+  };
+  user.sayNow = partial(user.say, "10:00");
+  user.sayNow("Hello");
+- `bind` doesn’t allow skipping context, but `partial` does.
+// call - after the returned function is assigned to a variable , and with new varibale we can call the function with given context
+// bind - directly binds the function with the context and returns the function , at time of assignment to new variable
+
+#Arrow Functions
+help maintain the current context(this)
+in regular functions, this is determined by how the function is called
+used in forEach, map, filter, reduce, find, setTimeout, setInterval
+Arrow functions:
+  - **Do not have `this`** (inherit from the surrounding scope).
+  - **Do not have `arguments`**.
+  - **Cannot be called with `new`**.
+  - **Do not have `super`** (used in class inheritance).
+- Best suited for short functions without their own execution context.
+not used as Constructor, no .bind(this), no arguments
+function defer(f, ms) {
+     return function() {
+       setTimeout(() => f.apply(this, arguments), ms);
+     };
+   }
+function sayHi(who) {
+     alert('Hello, ' + who);
+   }
+   
+let sayHiDeferred = defer(sayHi, 2000);
+sayHiDeferred("John");
+arguments still refers to the "John" argument passed to sayHiDeferred.
+f.apply(this, arguments) calls sayHi.apply(this, ["John"]).
+or//
+function defer(f, ms) {
+     return function() {
+       let context = this; // Store `this`
+       let args = arguments; // Store `arguments`
+       
+       setTimeout(function() {
+         f.apply(context, args); // Use the stored `this` and `arguments`
+       }, ms);
+     };
+   }
+   function sayHi(who) {
+     alert('Hello, ' + who);
+   }
+   let sayHiDeferred = defer(sayHi, 2000);
+   sayHiDeferred("John");
+
+#Property Flags and Descriptors 
+writable,enumerable,configurable
+getting property descriptors - Object.getOwnPropertyDescriptor(obj, propertyName)
+modifying property flags - Object.defineProperty(obj, propertyName, descriptor)
+Object.defineProperty(user, "name", {value: "John", writable: false, enumerable: true, configurable: false});
+defining multiple properties - Object.defineProperties(obj, descriptors)(user, {name: { value: "John", writable: false },surname: { value: "Smith", writable: false }});
+retrieving all property descriptors - Object.getOwnPropertyDescriptors(obj)
+Object.preventExtensions(obj) - prevents adding new properties
+Object.seal(obj) - prevents adding/removing properties, sets configurable: false for all existing properties
+Object.freeze(obj) - prevents adding/removing/changing properties, sets configurable: false, writable: false for all existing properties
+// check object restritions - Object.isExtensible(obj),Object.isSealed(obj),Object.isFrozen(obj)
+
+#property getters and setters
+two types of properties - data properties(key-value) and accessor properties get/set 
+defineProperty - Object.defineProperty(user,'fullName',{get(){return `${this.name} ${this.surname}`},set(value){[this.name,this.surname] = value.split(' ')}});
+smart getters and setters - to control property 
+let user = {get name(){return this._name}} user.name = "pete"
+_name used for internal storage
+convert existing data properties into computed properties without breaking old code
+function User(name, birthday) {
+     this.name = name;
+     this.birthday = birthday;
+     Object.defineProperty(this, "age", {
+       get() {
+         return new Date().getFullYear() - this.birthday.getFullYear();
+       }
+     });
+}// in above age property will not be stored in object but will be calculated on the fly
+let john = new User("John", new Date(1992, 6, 1));
+
+#Prototypal Inheritance
+inherit properties and methods from other objects,enbling code reuse without duplication.
+#[[Prototyep]] - internal property of an object that links it to another object or null
+if a property is not found in an object, JavaScript looks for it in the prototype
+#Setting the Prototype 
+rabbit.__proto__ = animal; // rabbit inherits from animal
+let longEar = {earLength:10,__proto__:rabbit}; // longEar inherits from rabbit
+
+#Prototype Limitations
+No circular references, one prototype per object , __proto__ is getter/setter for [[Prototype]], Object.getPrototypeOf(obj) , Object.setPrototypeOf(obj, newProto)
+#the value of this - refers to the calling object ,not the prototype
+#Iterating over Properties - for..in loop iterates over all properties, including inherited ones
+#Filtering Object Properties - hasOwnProperty if a property belongs to an object and not its prototype
+#Methods Ignoring Protypes - Object.keys(),.values()
+#F.prototype - used by new operator to set [[Prototype]] of new objects
+Rabbit.prototype = animal; // new objects created by new Rabbit() will have animal as prototype
+Default function's prototype is an object containing a Constructor property that points back to the function
+# Rabbit.prototype = { jumps: ture }
+
+#Native Prototypes - built-in objects have prototypes Object,Array,Function,String,Number,Boolean,Symbol,Map,Set,Date,Error.prototype
+obj.__proto__ == Object.prototype // true
+obj.toString() === obj.__proto__.toString()
+# Prototype Chains
+# Borrowing methods from Prototypes //obj.join = Array.prototype.join
+Object.create(proto, [descriptors]) - creates an empty object with a given prototype
+Object.getPrototypeOf(obj) , Object.setPrototypeOf(obj, newProto)
+let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
+     __proto__ = A reference to the prototype of an object (i.e., its internal prototype).
+	prototype =	A property of constructor functions that sets the prototype for new objects.
+ const person1 = new Person("Alice");
+console.log(person1.__proto__ === Person.prototype); // true
+#object without __proto__ = const obj = Object.create(null); no access to object methods
+
+#Classes - syntactic sugar over prototypes , creating objects , encapsulation data in one contruct.
+#constructor() initializes the object, methods provide functionality
+class = special type of function, class methods are non-enumerable , methods are added to prototype
+#Class Expression - let User = class { constructor(name) { this.name = name; } };
+#Getter and Setter Methods - 
+class User {
+  constructor(name) { this.name = name; }
+  get name() { return this._name; }
+  set name(value) {
+    if (value.length < 4) alert("Name too short.");
+    this._name = value;
+  }
+}
+#Class Fields - Fields are assigned to each instance, not the prototype
+#Inheritance - extends keyword to create a class as a child of another class
+class Rabbit extends Animal{ constructor(name) { super(name);}}
+#Overriding a Method - super.method() to call a parent method 
+#Super Internals - use prototype lookup - super.method() === ParentClass.prototype.method.call(this)
+#field change in child class not change any thing because of field initailization in constructor
+
+#Static Properties and Methods - static keyword to define a method directly on the class
+Static methods belong to the class, not instances
+Defined using static keyword, Cannot be accessed via instance
+class User {
+  static staticMethod() {
+    console.log(this === User);
+  }
+}
+User.staticMethod();
+
+
+
+
+
+#Callbacks
+JavaScript host environments allow you to schedule asynchronous actions—actions initiated now but completed later.
+
+This is an example of **callback-based asynchronous programming**, where a function performing an asynchronous operation accepts a callback to execute after completion.
+
+# The Pyramid of Doom
+For multiple dependent asynchronous operations, the code becomes deeply nested:
+
+#concept of Promises
+A **Promise** in JavaScript represents a value that may be available now, or in the future, or never. It acts as a bridge between "producing code" (which takes time) and "consuming code" (which needs the result).
+let promise = new Promise(function(resolve, reject) {
+     // executor function
+   });
+It calls `resolve(value)` on success and `reject(error)` on failure.
+Internal Properties
+- **state**: Initially `"pending"`, changes to `"fulfilled"` (resolved) or `"rejected"` (rejected).
+- **result**: Initially `undefined`, changes to the resolved value or error.
+# Handling Promises: `.then()`, `.catch()`, `.finally()`
+.then() - handles both success and error results
+promise.then(
+     result => alert(result),
+     error => alert(error)
+   );
+.catch() - handles errors
+.finnaly() - runs after `.then()` or `.catch() regardless of the result, useful for cleanup
+#Chaining Promises - each `.then()` returns a new promise .then().then().catch()
+#Returning Promises - return 
+new Promise(resolve => setTimeout(() => resolve(1), 1000))
+  .then(result => new Promise(resolve => setTimeout(() => resolve(result * 2), 1000)))
+  .then(result => console.log(result)); // Output: 2
+
+#Thenables and Promises
+A *thenable* is an object with a `.then` method, making it behave like a promise. JavaScript treats such objects as promises.
+class Thenable {
+  constructor(num) {
+    this.num = num;
+  }
+  then(resolve, reject) {
+    setTimeout(() => resolve(this.num * 2), 1000);
+  }
+}
+
+new Promise(resolve => resolve(1))
+  .then(result => new Thenable(result))
+  .then(alert); // Shows 2 after 1000ms
+
+
+# Promise API
+JavaScript's `Promise` class has six static methods:
+
+1. **Promise.all(promises)** - Waits for all promises to resolve and returns an array of their results. If any promise rejects, it fails immediately.
+2. **Promise.allSettled(promises)** - Waits for all promises to settle and returns an array with their status (`fulfilled` or `rejected`).
+3. **Promise.race(promises)** - Resolves or rejects as soon as the first promise settles.
+4. **Promise.any(promises)** - Resolves as soon as the first promise is fulfilled; rejects only if all promises fail.
+5. **Promise.resolve(value)** - Creates a resolved promise with the given value.
+6. **Promise.reject(error)** - Creates a rejected promise with the given error.
+
+### Example: Using `Promise.all`
+```javascript
+Promise.all([
+  new Promise(resolve => setTimeout(() => resolve(1), 3000)),
+  new Promise(resolve => setTimeout(() => resolve(2), 2000)),
+  new Promise(resolve => setTimeout(() => resolve(3), 1000))
+]).then(alert); // Shows [1, 2, 3] after 3 seconds
+
+## Async/Await
+# Async Functions
+The `async` keyword makes a function return a promise. Non-promise values are automatically wrapped in `Promise.resolve`.
+async function f() {
+     return 1;
+     }
+f().then(alert); // 1
+# Await
+The `await` keyword pauses execution until a promise resolves.
+async function f() {
+     let promise = new Promise(resolve => setTimeout(() => resolve("done!"), 1000));
+     let result = await promise;
+     alert(result); // "done!"
+   }
+f();
+# Awaiting Thenables
+The `await` keyword can also work with *thenables*.
+#Async Class Methods
+class Waiter {
+  async wait() {
+    return await Promise.resolve(1);
+  }
+}
+new Waiter()
+  .wait()
+  .then(alert); // 1
+
+# Using Async/Await for Fetch API
+Fetching and processing JSON using async/await:
+
+# Async IIFE (Immediately Invoked Function Expression)
+For older browsers or when not using modules, wrap async calls in an immediately invoked function:
+
+(async () => {
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+})();
+
+#Modules - jS code can be split into multiple files called modules
+`export` marks functions, variables, or classes to be accessible from other modules.
+`import` allows bringing in functionality from other modules.
+export function fnc() {} // named export // import {fnc} from './module.js'
+export default function fnc() {} // default export // import fnc from './module.js'
+export {sayHi , sayBye} // multiple exports // import {sayHi,sayBye} from './module.js'
+import * as obj from './module.js' // import all exports as obj
+import {default as User} from './user.js' // import default export
+import * as say from './say.js';
+say.hi('John');
+say.bye('John');
+
+#Export Default - used to export a single entity per module
+export default class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+Importing a default export does NOT require curly braces
+import User from './user.js';
+new User('John');
+# Default vs Named Exports
+| Named Export | Default Export |
+|-------------|---------------|
+| `export class User {}` | `export default class User {}` |
+| `import {User} from ...` | `import User from ...` |
+| Explicit, requires correct name | Can be imported under any name |
+#need specific handling - `export * from` does NOT re-export the default export:
+export * from './user.js'; // Only named exports
+export {default} from './user.js'; // Default export
+
+# Why Use Dynamic Imports?
+- Static `import` must be at the top-level and cannot be conditional.
+- `import()` allows loading modules at runtime, conditionally, or on demand.
+
+let modulePath = './say.js';
+import(modulePath)
+  .then(module => module.sayHi('John'))
+  .catch(err => console.log("Module loading error", err));
+
+# Using `await` with Dynamic Import
+let { hi, bye } = await import('./say.js');
+hi(); // Hello
+bye(); // Bye
+
+# Importing Default Exports Dynamically
+let obj = await import('./say.js');
+let say = obj.default;
+say();
+
+`import()` returns a promise resolving to the module object.
+- Not a function, so cannot use `call()` or `apply()`.

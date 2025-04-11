@@ -1,0 +1,149 @@
+Static Properties & Methods
+Static methods belong to the class, not instances.
+Defined using static keyword.
+Cannot be accessed via instances.
+
+class User {
+  static staticMethod() {
+    console.log(this === User);
+  }
+}
+User.staticMethod(); // true
+Use cases:
+
+Utility methods (e.g., comparison functions)
+
+class Article {
+  constructor(title, date) {
+    this.title = title;
+    this.date = date;
+  }
+  static compare(articleA, articleB) {
+    return articleA.date - articleB.date;
+  }
+}
+
+let articles = [
+  new Article("HTML", new Date(2019, 1, 1)),
+  new Article("CSS", new Date(2019, 0, 1))
+];
+articles.sort(Article.compare);
+Factory methods
+
+class Article {
+  static createTodays() {
+    return new this("Today's digest", new Date());
+  }
+}
+let article = Article.createTodays();
+console.log(article.title); // "Today's digest"
+Database-like operations
+
+class Article {
+  static remove(id) {
+    console.log(`Deleting article ${id}`);
+  }
+}
+Article.remove(12345);
+
+
+Static Properties
+Declared with static keyword.
+Inherited by child classes.
+
+class Article {
+  static publisher = "Ilya Kantor";
+}
+console.log(Article.publisher); // "Ilya Kantor"
+Inheritance of Static Properties & Methods
+Static properties/methods are inherited by child classes.
+
+class Animal {
+  static planet = "Earth";
+  static compare(a, b) {
+    return a.speed - b.speed;
+  }
+}
+
+class Rabbit extends Animal {}
+
+console.log(Rabbit.planet); // "Earth"
+Prototype references in inheritance:
+
+
+console.log(Rabbit.__proto__ === Animal); // true
+console.log(Rabbit.prototype.__proto__ === Animal.prototype); // true
+Private & Protected Properties
+Public vs. Private vs. Protected
+Public: Accessible anywhere.
+Protected (_property): Convention for internal use, still accessible.
+Private (#property): Truly private, only accessible inside the class.
+Protected Properties
+
+class CoffeeMachine {
+  _waterAmount = 0;
+
+  set waterAmount(value) {
+    this._waterAmount = value < 0 ? 0 : value;
+  }
+
+  get waterAmount() {
+    return this._waterAmount;
+  }
+}
+let machine = new CoffeeMachine();
+machine.waterAmount = -10;
+console.log(machine.waterAmount); // 0 (protected)
+Read-Only Properties
+
+class CoffeeMachine {
+  constructor(power) {
+    this._power = power;
+  }
+  get power() {
+    return this._power;
+  }
+}
+let machine = new CoffeeMachine(100);
+console.log(machine.power); // 100
+machine.power = 50; // Error (no setter)
+Private Fields (#)
+
+class CoffeeMachine {
+  #waterLimit = 200;
+
+  #fixWaterAmount(value) {
+    return Math.min(Math.max(value, 0), this.#waterLimit);
+  }
+
+  setWaterAmount(value) {
+    this.#waterLimit = this.#fixWaterAmount(value);
+  }
+}
+let machine = new CoffeeMachine();
+machine.setWaterAmount(100);
+// machine.#waterLimit = 500; // Error
+Private fields cannot be accessed or overridden outside the class.
+Unlike protected properties, private fields aren’t inherited.
+Extending Built-in Classes
+You can extend native classes like Array, Map, etc.
+
+class PowerArray extends Array {
+  isEmpty() {
+    return this.length === 0;
+  }
+}
+
+let arr = new PowerArray(1, 2, 3);
+console.log(arr.isEmpty()); // false
+let filteredArr = arr.filter(item => item > 2);
+console.log(filteredArr.isEmpty()); // false
+Class Checking (instanceof)
+obj instanceof Class checks if an object belongs to a class (or subclass).
+
+class Rabbit {}
+let rabbit = new Rabbit();
+
+console.log(rabbit instanceof Rabbit); // true
+console.log([] instanceof Array); // true
+console.log([] instanceof Object); // true

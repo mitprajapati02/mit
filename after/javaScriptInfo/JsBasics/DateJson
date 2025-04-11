@@ -1,0 +1,119 @@
+# Date - Built-in Object
+
+## Creation
+
+- `new Date()` - Creates a Date object for the current date and time.
+- `new Date(milliseconds)` - Creates a date from the number of milliseconds (1/1000 of a second) passed since Jan 1st, 1970 UTC+0.
+  ```js
+  let Dec31_1969 = new Date(-24 * 3600 * 1000); // 31 Dec 1969
+  ```
+- `new Date(datestring)` - Creates a date from a string.
+  ```js
+  let date = new Date("2017-01-26");
+  ```
+- `new Date(year, month, date, hours, minutes, seconds, ms)`
+  - The month count starts from 0 (January) up to 11 (December).
+
+## Access Date Components
+
+- `getFullYear()`, `getMonth()`, `getDate()`, `getHours()`, `getMinutes()`, `getSeconds()`, `getMilliseconds()`, `getDay()` - Returns the components relative to the local time zone.
+- UTC versions: `getUTCFullYear()`, `getUTCMonth()`, `getUTCDay()`.
+- `getTime()` - Returns the timestamp (milliseconds since Jan 1, 1970 UTC+0).
+- `getTimezoneOffset()` - Returns the difference between UTC and local time zone in minutes.
+
+## Setting Date Components
+
+- `setFullYear(year, [month], [date])`
+- `setMonth(month, [date])`
+- `setDate(date)`
+- `setHours(hour, [min], [sec], [ms])`
+- `setMinutes(min, [sec], [ms])`
+- `setSeconds(sec, [ms])`
+- `setMilliseconds(ms)`
+- `setTime(milliseconds)` - Sets the whole date by milliseconds since Jan 1, 1970 UTC.
+- UTC variants are available, e.g., `setUTCHours()`.
+
+## Auto-correction
+
+- JavaScript automatically corrects date values beyond their normal range.
+  ```js
+  let date = new Date(2023, 0, 32); // Becomes February 1, 2023
+  ```
+
+## Date to Number & Date Difference
+
+- When a `Date` object is converted to a number, it becomes a timestamp (same as `date.getTime()`).
+- Dates can be subtracted to get the difference in milliseconds.
+
+## `Date.now()`
+
+- Returns the current timestamp.
+  ```js
+  let timestamp = Date.now();
+  ```
+- Faster and more efficient than `new Date().getTime()`.
+
+---
+
+# JSON Methods
+
+## Converting Objects to JSON
+
+- `JSON.stringify(obj)` converts an object into a JSON string.
+  ```js
+  let user = { name: "John", age: 30 };
+  let json = JSON.stringify(user);
+  console.log(json); // {"name":"John","age":30}
+  ```
+- JSON format differences:
+  - Strings use **double quotes**.
+  - Object property names are also double-quoted.
+  - JSON supports objects, arrays, strings, numbers, booleans, and `null`.
+  - Skips functions, `undefined`, and symbolic properties.
+  - Circular references are **not allowed**.
+
+## Excluding and Transforming: `replacer`
+
+- Syntax: `JSON.stringify(value[, replacer, space])`
+  ```js
+  alert(JSON.stringify(user, ["name"])); // {"name":"John"}
+  ```
+- A function can be used as `replacer` to filter values.
+  ```js
+  alert(JSON.stringify(user, function(key, value) {
+    return key == "age" ? undefined : value;
+  }));
+  ```
+
+## Formatting JSON Output
+
+- `JSON.stringify(user, null, 4)` formats with indentation.
+
+## Custom `toJSON()`
+
+- Objects can define a `toJSON` method.
+  ```js
+  let room = { number: 23, toJSON() { return this.number; } };
+  console.log(JSON.stringify(room)); // 23
+  ```
+
+## Parsing JSON
+
+- `JSON.parse(str)` converts a JSON string back into an object.
+  ```js
+  let obj = JSON.parse('{"name":"John","age":30}');
+  ```
+
+## `reviver` Function
+
+- Used to transform values during parsing.
+  ```js
+  let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+  let meetup = JSON.parse(str, function(key, value) {
+    return key == "date" ? new Date(value) : value;
+  });
+  alert(meetup.date.getDate()); // Works correctly
+  ```
+
+This document provides a structured overview of JavaScript's `Date` object and JSON methods. Let me know if you need any clarifications! 🚀
+

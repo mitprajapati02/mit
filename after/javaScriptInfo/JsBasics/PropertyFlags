@@ -1,0 +1,70 @@
+**Property Flags and Descriptors in JavaScript**
+
+### Property Flags
+Object properties have three special attributes (flags):
+- **writable**: If `true`, the value can be changed; otherwise, it's read-only.
+- **enumerable**: If `true`, the property is listed in loops; otherwise, it's hidden.
+- **configurable**: If `true`, the property can be deleted, and its attributes can be modified; otherwise, it cannot.
+
+### Getting Property Descriptors
+Use `Object.getOwnPropertyDescriptor(obj, propertyName)` to retrieve a property’s descriptor.
+
+Example:
+```js
+let descriptor = Object.getOwnPropertyDescriptor(obj, 'prop');
+```
+
+### Modifying Property Flags
+Use `Object.defineProperty(obj, propertyName, descriptor)` to modify a property’s attributes.
+
+Example:
+```js
+let user = {};
+Object.defineProperty(user, "name", {
+  value: "John",
+  writable: false,
+  enumerable: true,
+  configurable: false
+});
+```
+
+### Non-Enumerable Properties
+By default, custom properties appear in `for..in` loops. To hide a property, set `enumerable: false`.
+```js
+Object.defineProperty(user, "toString", {
+  enumerable: false
+});
+```
+
+### Non-Configurable Properties
+Once `configurable: false` is set, the property flags cannot be changed, and the property cannot be deleted.
+- The only exception: `writable: true` can still be changed to `false`.
+
+### Defining Multiple Properties
+Use `Object.defineProperties(obj, descriptors)` to set multiple properties at once.
+```js
+Object.defineProperties(user, {
+  name: { value: "John", writable: false },
+  surname: { value: "Smith", writable: false }
+});
+```
+
+### Retrieving All Property Descriptors
+Use `Object.getOwnPropertyDescriptors(obj)` to get descriptors of all properties.
+```js
+let descriptors = Object.getOwnPropertyDescriptors(user);
+```
+
+### Sealing and Freezing Objects
+To restrict modifications to an object:
+- `Object.preventExtensions(obj)`: Prevents adding new properties.
+- `Object.seal(obj)`: Prevents adding/removing properties, sets `configurable: false`.
+- `Object.freeze(obj)`: Prevents adding/removing/changing properties, sets `configurable: false, writable: false`.
+
+### Checking Object Restrictions
+- `Object.isExtensible(obj)`: Returns `false` if new properties can't be added.
+- `Object.isSealed(obj)`: Returns `true` if properties can't be added/removed and are non-configurable.
+- `Object.isFrozen(obj)`: Returns `true` if properties can't be added/removed/changed.
+
+These methods help control property behavior in JavaScript, ensuring better data integrity and control over object modifications.
+

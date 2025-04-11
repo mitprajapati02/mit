@@ -1,0 +1,888 @@
+Data types 8 basic
+Number  Infinity,-Infinity,NaN 
+BigInt
+String
+Boolean
+The "null" value
+The "undefined" value
+Objects 
+Symbols
+
+
+typeof  Operator
+
+alert("");
+result = prompt(title,[default]);
+isVariable = confirm("?");
+
+// Type Conversions
+
+String(value)
+Number(value), unary +, 
+Boolean(value), !!value
+
+// Basic Operators , maths
+
+Maths - Addition , Subtraction , Multiplication , Division, Remainder, Exponentiation(**)
+Sting concatenation with binary + => str = "My" + "String" // MyString
+Numberic conversion , unary +
+Assingment 
+= return a value , chainin Assingment a = b = c = 2+2
+Modify-in-place +=, -=, *=, /=, %=
+Increment/Decrement ++, -- prefix(new value) and postfix(old value)
+Bitwise operators
+Comma operator , multiple expressions a = (1+2, 3+4) // a = 7 , for (a = 1, b = 3, c = a*b; a < 10; a++){}
+Comparisons >, <, >=, <=, ==, !=, ===, !== js convers the values to numbers for comparison
+   string Comparisons ( unicode Base)
+   comparison with null and undefined , null == undefined // true, null === undefined // false
+   for maths and other comparisons null become 0, undefined become NaN , null >= 0 // true
+Conditional branching: if, ? , ||, &&
+   if(expressions to boolean), else, else if
+    ? operator , let result = condition ? value1 : value2; , multiple ? operators result = (a > b) ? b : a> c ? c : a;
+    break , continue not in ternary operator
+Logical operators ||, &&, !, ?? nullish coalescing operator
+    ||
+        If any true return true 
+        Finds the first truthy value or last operand , result = value1 || value2 || value3; left to right , operand can be value, a varaible Assingment , function call
+    && 
+        If any false return false
+        Finds the first falsy value or last operand , result = value1 && value2 && value3; left to right , operand can be value, a varaible Assingment , function call
+    !
+      result = !value; !! to convert to boolean
+    Nullish coalescing operator ?? (problem in above that 0, '', false are falsy values)(solution that ?? returns the first defined value)
+      result = value1 ?? value2; // if value1 is null or undefined return value2, otherwise value1
+Loops: while, for, do..while, break, continue
+    for - skipping parts for(;;) , 
+    break , continue not in ternary operator
+    Labels for break/continue , labelName: for(;;) { break labelName; }
+    switch case, default, break, case can be expression // type matters
+
+Functions
+    Function Declaration, Function Expression, Arrow Function
+    Function Declaration
+        function name(parameters) { body }
+    Function Expression
+        let name = function(parameters) { body }
+    Arrow Function
+        let name = (parameters) => body
+    Function Declaration vs Function Expression
+        Function Declaration
+            Can be called earlier than it is defined
+            Can only be hoisted
+            Can be used before it is declared
+        Function Expression
+            Cannot be called earlier than it is defined
+            Cannot be hoisted
+            Cannot be used before it is declared
+    Arrow Function vs Function Expression
+        Arrow Function
+            Does not have its own this
+            Does not have arguments
+            Cannot be called with new
+            Cannot be used as a constructor
+            Cannot have duplicate named parameters in
+
+function name(parameter = anoterFunction()) { body } // default value
+Alternative default parameter - > by comparing parameter with undefined
+Returning a value - possible to use return without a value or without return // it returns undefined
+Function Expression -> Function is a value , can be assigned to anoter variable
+Callback Functions
+
+Objects
+let obj = new Object(); // "object constructor" syntax
+let obj = {}; // "object literal" syntax
+Add - obj.key = value; obj["key"] = value;
+Delete - delete obj.key;
+Square brackets obj["key"] - for multiword keys , to access by variable name
+Computed properties - let key = "name" ; obj = {[key]: "John"}; // obj = {name: "John"}
+Property value shorthand - let name = "John"; let user = {name}; // user = {name: "John"} or { name, age }
+
+
+Property names limitations - can be reserved words, other types converted to string obj["0"] = obj[0]
+non-existing property returns undefined, "age" in user when property exist but store undefined
+for (key in object){}
+order like an object - integer properties sorted other apper in creation order
+integer properties which form integer without change from string
+
+object references and copying - a variable assigned to an object stores not the object itself,when an object variable is copied ,the reference is copied ,but the object itself is not duplicated.
+const object can be modified - error if set user = as a whole
+Cloning and merging , Object.assign
+by iterating over its properties and copying on primitive level
+Object.assign(dest,...sources)
+Nested Cloning - deep Cloning
+let clone = structuredClone(object); supports most data types, circular reference // fail when object has a function property //solution _.cloneDeep(obj) form lodash
+Object methods, "this"
+user.sayHi = function() {}; // predeclared function also function sayHi(){};
+user.sayHi = sayHi;
+shorthand user{ sayHi(){}} // there is difference come related to inheritance
+"this" sayHi(){ this.name // user.name possible}
+"this" is not bound user.sayHi(), user['sayHi']();
+calling without an object : this == undefined
+Arrow functions have no "this" - it take from outer normal function
+
+constructor,operator "new" - to crate many similar Objects
+constructor function - name start with capital and executed with "new" operator.
+function User(name){
+    this // object created automatically and returned
+    this.name = name;
+    this.isAdmin = false;
+} , let user = new function (){}
+let user = new User("jack");
+arrow function not has new keyword
+constructor mode test: new.target property . undefined for regular calls , equals function if called with new .
+function User(name){ if(!new.target){return new User(name)}}
+Return from constructor - return with object then object return , return with primitive this returned
+Omitting parentheses - new User; and new User(); //same
+Methods in constructor function User(name){this.sayHi = function(){};}
+// sayHi : function(){ } <- this syntax goes into new object
+
+
+Optional chaining '?.' // safe way to access nested object properties
+The "non-existing property" problem // we prefer undefined or null over error
+How can we do this ? // using if or conditional operator ?
+user.address ? user.address.street : undefined ;
+better way to write it user.address && user.address.street && ...
+Optional chaining // stops evalution if value before ?. is undefined or null
+user?.address?.street // check ?. optional before it not after ?. it
+short-circuiting // let user = null ; let x = 0; user?.sayHi(x++); // x =0
+other variants: ?.() , ?.[] not operator its special syntax
+userAdmin.admin?.(); // for function
+user1?.[key] // variable or Square brackets
+Also use with delete - delete user?.name;
+not use for writing - user?.name = "john" //error
+
+
+
+Data types
+Methods of primitives
+a primitive  - 7 types - string, number, bigint , boolean , symbol , null, undefined
+an object - values as properties, properties like function and built-in object like dates, errors, html elements
+A primitive as an object - "object wrappers"
+Numbers - let billion = 1000000000 == 1_000_000_000 == 1e9 // 1e-3 == 0.001 == 1/1000
+hex, binary, octal - 0x, 0b, 0o // 0x1f == 31, 0b111 == 7, 0o10 == 8
+toString(base) - base 2 to 36// num.toString(36) // 1234..toString(16)
+Math.floor, Math.ceil, Math.round,Math.trunc, Math.round(num * 100) / 100 // toFixed(2) -> give string //
+
+Tests: isFinite, isNaN // isNaN(value) convert value to number // because can not use == NaN so it's not equal to itself
+isFinite(value) // " ", "" become 0
+// difference in Number.isNaN("str") // false, isNaN("str") // true
+Comparison with Object.is - Object.is(NaN, NaN) // true, Object.is(0, -0) // false // Object.is(a,b) = a === b
+parseInt and parseFloat - parseInt("100px") // 100, parseFloat("12.5em") // 12.5 // parseInt('a123') // NaN , first symbol stops the process // parseInt('0xff', 16) // 255
+// parseFloat('12.3.4') // 12.3 -> till fist dot
+Other Math functions - Math.random() // 0 to 1, Math.max(a,b,c) // Math.min(a,b,c) // Math.pow(2,10) // 2**10
+
+
+Strings
+template function : function `string`
+length property - str.length not str.length()
+Accessing characters - str[0] or str.charAt(0) // str[-2] // undefined not negative indexes
+for of loop - for (let char of str) {}
+Strings are immutable - str[0] = 'h' // error // can not change character // instead str = 'H' + str[1] assingn new string
+Changing the case - toLowerCase(), toUpperCase(), str.toLowerCase() // str[0].toUpperCase() //'hello'[0].toUpperCase() // 'H'
+Searching for a substring - indexOf, lastIndexOf
+str.indexOf(substr, pos) //for loop or while for search on whole text// str.lastIndexOf(substr, pos) // str.includes(substr) // str.startsWith(substr) // str.endsWith(substr)
+we cannot use str.indexOf() in if paranthesis // if(str.indexOf('SubStr')) // 0 is false // right way if(str.indexOf('SubStr') != -1)
+includes, startsWith, endsWith return true or false 
+Getting a substring - str.slice(start, end) not includes end// str.substring(start, end) allow start to be greater than end , negative not supported // str.substr(start, length) // str.slice(-4, -1) // str.substring(0, 5) // str.substr(0, 5)
+comparing strings - str1.localeCompare(str2) // 0, 1, -1 // str1 > str2 // 1, str1 < str2 // -1
+str.codePointAt(pos) // str.codePointAt(pos).toString(16)// str.fromCodePoint(code) we can also use hexa value as code // String.fromCodePoint(65, 90, 97, 122) // "AZaz" ,
+
+
+Arrays , proplems in object - no methods to manage order of elements, can not insert property between existing ones
+let arr = new Array(); or arr = []
+replace or add elements by Square brackets 
+total count - length // arr[1].name object access// arr[3]() function call
+last elements -> arr[-1] no no  //arr[arr.length - 1] or arr.at(-1)
+
+Methods pop/push, shift/unshift - queue most uses of Array
+push - append last , shift get first element from beginning
+another use case for arrays – the data structure named stack.
+pop takes an element from the end.
+stack LIFO (Last-In-First-Out) principle. For queues, we have FIFO (First-In-First-Out).
+Array can work both as queue and as stack like deque data structure
+fruits.push(...) == fruits[fruits.length] = ....
+
+#Internals
+Array extends objects thus copied by reference ,  elements in the contiguous memory area, one after another,
+it's functionality break if assign idex greater than length and property with arbitrary name fruits.age = 25;
+Loops - for...of , “length” is numeric index plus one. length property is writable.if we decrease it, the array is truncated
+to clear array = arr.length = 0;
+new Array(n) - n length array
+toString() return comma-separated list of elements
+Arrays do not have Symbol.toPrimitive, neither a viable valueOf,
+do not compare arrays with == , If one of the arguments of == is an object, and the other one is a primitive, then the object gets converted to primitive,0 ==[] //true , '0' == [] //false
+compare arrays - by loop or iteration methods
+
+Array methods- arr.push(...items), arr.pop(), arr.shift(), arr.unshift(...items)
+delete arr[1]  // now arr = ["I",  , "home"];// arr[1] // undefined
+arr.splice method insert, remove and replace elements.arr.splice(start[, deleteCount, elem1, ..., elemN]).Returns the array of removed elements.Negative indexes allowed
+arr.slice([start], [end])- return new array copying it items from start to end
+arr.slice() creates copy of arr which not afftect original array
+arr.concat(arg1, arg2...) it only copies elements from arrays. Other objects, even if they look like arrays, are added as a whole 
+
+But if an array-like object has a special Symbol.isConcatSpreadable property, then it’s treated as an array by concat: its elements are added instead:
+let arr = [1, 2];
+let arrayLike = {
+  0: "something",
+  1: "else",
+  [Symbol.isConcatSpreadable]: true,
+  length: 2
+};alert( arr.concat(arrayLike) ); // 1,2,something,else
+
+Iterate: forEach - arr.forEach(function(item, index, array){})he result of the function (if it returns any) is thrown away and ignored.
+Searching in array - indexOf(item, from)/lastIndexOf and includes(item, from),includes handles NaN correctly, it uses strict equality ===
+find and findIndex/findLastIndex - for array of objects if find retruned item , iteration stopped
+let result = arr.find(function(item, index, array){})
+
+filter // because find look for first element //return array of elements
+let results = arr.filter(function(item,index, array){})
+
+Transform an array //transform and reorder an array.
+map - let result = arr.map(function(item, index, array){})
+sort(fn)- arr.sort() return sorted array , and modified itself// item sorted string by default function compareNumeric(a,b){ if (a>b) return 1; if(a==b) return 0; if(a<b) return -1;} arr.sort(compareNumeric)
+sortfn need to just return + or - value so functon(a,b) {return a-b;}
+reverse - arr.reverse();
+split and join - str.split(delim) string to array based on delim, second argument = length of array beyond it elements are ignored
+split into letters - "test".split(''); //t,e,s,t
+let str = arr.join(';')
+
+reduce/reduceRight // like map  but used to calculate single value based on the array
+let value = arr.reduce(function(accumulator, item, index, array){},[initial])
+let result = arr.reduce((sum, current) => sum + current, 0);//if no initial then first element as initial
+
+Array.isArray(value)
+Most methods support “thisArg”- arr.find(func, thisArg);arr.filter(func, thisArg);arr.map(func, thisArg);
+arr.some(fn)/arr.every(fn) -If any/all results are true, returns true, otherwise false.
+arr.some() immediately return true and stops iterating
+arr.every() immediately retrun false
+
+We can use every to compare arrays:
+
+function arraysEqual(arr1, arr2) {
+  return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
+}
+arr.fill(value, start, end) – fills the array with repeating value from index start to end.
+arr.copyWithin(target, start, end) – copies its elements from position start till position end into itself, at position target (overwrites existing).
+arr.flat(depth)/arr.flatMap(fn) create a new flat array from a multidimensional array.
+
+Iterables and array-likes - Iterables are objects that implement the Symbol.iterator method, Array-likes are objects that have indexes and length
+strings are both iterable (for..of works on them) and array-like (they have numeric indexes and length).
+the range in the example above is iterable, but not array-like, because it does not have indexed properties and length.
+And here’s the object that is array-like, but not iterable:
+
+let arrayLike = { // has indexes and length => array-like
+  0: "Hello",
+  1: "World",
+  length: 2
+};
+
+// Error (no Symbol.iterator)
+Both iterables and array-likes are usually not arrays, they don’t have push, pop
+we would like to work with range using array methods.- Array.from
+let arr = Array.from(arrayLike);
+Array.from(obj[, mapFn, thisArg]),let arr = Array.from(range, num => num * num);
+it splits str into array of characters
+We can even build surrogate-aware slice on it:
+
+function slice(str, start, end) {
+  return Array.from(str).slice(start, end).join('');
+}
+// the native method does not support surrogate pairs
+alert( str.slice(1, 3) ); // garbage (two pieces from different surrogate pairs)
+
+Map and Set- Map is keyed data items like object but map allows key of any type
+new Map() – creates the map.
+map.set(key, value) – stores the value by the key.
+map.get(key) – returns the value by the key, undefined if key doesn’t exist in map.
+map.has(key) – returns true if the key exists, false otherwise.
+map.delete(key) – removes the element (the key/value pair) by the key.
+map.clear() – removes everything from the map.
+map.size – returns the current element count.
+remember the regular Object? it would convert keys to string
+map[key] isn’t the right way to use a Map - map[key] = 2 not way to set key 
+Map can also use objects as keys
+Chaining -map.set call returns the map itself, so we can “chain” the calls:map.set('1', 'str1').set(1, 'num1').set(true, 'bool1');
+#Iteration over Map -map.keys(),map.values(),map.entries() – returns an iterable for entries [key, value], it’s used by default in for..of.
+let recipeMap = new Map([
+  ['cucumber', 500],
+  ['tomatoes', 350],
+  ['onion',    50]
+]); /// array of [key,value] pairs
+The iteration goes in the same order as the values were inserted. Map preserves this order, unlike a regular Object.
+recipeMap.forEach((value, key, map)=>{});
+
+#Object.entries: Map from Object - When a Map is created, we can pass an array (or another iterable) with key/value pairs for initialization
+Object.entries(obj) that returns an array of key/value pairs for an object
+let obj = {
+  name: "John",
+  age: 30
+}; let map = new Map(Object.entries(obj));
+Object.fromEntries: Object from Map - let prices = Object.fromEntries([
+  ['banana', 1],
+  ['orange', 2],
+  ['meat', 4]
+]);// now prices = { banana: 1, orange: 2, meat: 4 }
+let obj = Object.fromEntries(map.entries());
+let obj = Object.fromEntries(map); // omit .entries()
+
+A Set is a special type collection – “set of values” (without keys), where each value may occur only once.
+new Set([iterable])
+set.add(value) 
+set.delete(value) 
+set.has(value) 
+set.clear() 
+set.size
+let set = new Set();let john = { name: "John" };set.add(john); for (let user of set){user.name}
+Iteration over set - for , set.forEach((value, valueAgain,set) => {})
+set.keys(),set.values(),set.entries()
+WeakMap and WeakSet - Usually, properties of an object or elements of an array or another data structure are considered reachable and kept in memory while that data structure is in memory.
+
+WeakMap is fundamentally different in this aspect. It doesn’t prevent garbage-collection of key objects.
+The first difference between Map and WeakMap is that keys must be objects, not primitive values:
+let weakMap = new WeakMap();// can't use a string as the key
+
+WeakMap does not support iteration and methods keys(), values(), entries(), so there’s no way to get all keys or values from it.
+
+WeakMap has only the following methods:
+weakMap.set(key, value)
+weakMap.get(key)
+weakMap.delete(key)
+weakMap.has(key)
+Use case: additional data
+Use case: caching
+
+Object.keys, values, entries - returns an array of [key, value] pairs.
+Call syntax map.keys() Object.keys(obj), but not obj.keys()
+Object.* methods return “real” array objects, not just an iterable.
+// loop over values
+for (let value of Object.values(user)) {
+  alert(value); // John, then 30
+} , Object.keys/values/entries ignore symbolic properties , Object.getOwnPropertySymbols that returns an array of only symbolic keys, Reflect.ownKeys(obj) that returns all keys.
+#Transforming objects - Object.enteries(obj) -> map, transform etc -> Object.fromEntries(array)
+#Destructuring assignment-special syntax that allows us to “unpack” arrays or objects into a bunch of variables
+#Array destructuring - let arr = ["John", "Smith"],let [firstName, surname] = arr;
+let [firstName, surname] = "John Smith".split(' ');
+// second element is not needed let [firstName, , title] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+
+Works with any iterable on the right-side
+…Actually, we can use it with any iterable, not only arrays:
+let [a, b, c] = "abc"; // ["a", "b", "c"]
+let [one, two, three] = new Set([1, 2, 3]);
+
+Assign to anything at the left-side
+We can use any “assignables” on the left side.
+For instance, an object property:let user = {};[user.name, user.surname] = "John Smith".split(' ');
+Swap variables trick
+// Let's swap the values: make guest=Pete, admin=Jane
+[guest, admin] = [admin, guest];
+#The rest ‘…’,let [name1, name2, ...rest] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+// rest is an array of items, starting from the 3rd one
+#Default values
+let [name = "Guest", surname = "Anonymous"] = ["Julius"];
+#Object destructuring
+let {var1, var2} = {var1:…, var2:…}
+
+
+let {height, width, title} = { title: "Menu", height: 200, width: 100 }
+//{ sourceProperty: targetVariable };let {width: w, height: h, title} = options;
+
+let {width: w = 100, height: h = 200, title} = options;
+
+Gotcha if there’s no let
+
+To show JavaScript that it’s not a code block, we can wrap the expression in parentheses (...):
+// okay now
+({title, width, height} = {title: "Menu", width: 200, height: 100});
+
+#Nested destructuring
+#Smart function parameters
+Here’s a bad way to write such a function:
+function showMenu(title = "Untitled", width = 200, height = 100, items = []) {
+  // ...
+}
+// undefined where default values are fine
+showMenu("My Menu", undefined, undefined, ["Item1", "Item2"])
+let options = {
+  title: "My menu",
+  items: ["Item1", "Item2"]
+};
+function showMenu({
+  title = "Untitled",
+  width: w = 100,  // width goes to w
+  height: h = 200, // height goes to h
+  items: [item1, item2] // items first element goes to item1, second to item2
+}) {
+  alert( `${title} ${w} ${h}` ); // My Menu 100 200
+  alert( item1 ); // Item1
+  alert( item2 ); // Item2
+}
+showMenu(options);
+function({
+  incomingProperty: varName = defaultValue
+  ...
+})
+If we want all values by default, then we should specify an empty object:
+showMenu({}); // ok, all values are default
+showMenu(); // this would give an error
+function showMenu({ title = "Menu", width = 100, height = 200 } = {}) {
+  alert( `${title} ${width} ${height}` );
+}
+showMenu(); // Menu 100 200
+#date - built in object
+#Creation - new Date() - create a Date object for the current date and time:
+new Date(milliseconds) -number of milliseconds (1/1000 of a second) passed after the Jan 1st of 1970 UTC+0.
+create a date from a timestamp using new Date(timestamp)
+// 31 Dec 1969,let Dec31_1969 = new Date(-24 * 3600 * 1000);
+new Date(datestring),let date = new Date("2017-01-26");
+new Date(year, month, date, hours, minutes, seconds, ms)
+The month count starts with 0 (Jan), up to 11 (Dec).
+#Access date components
+getFullYear(),getMonth(),getDate(),getHours(), getMinutes(), getSeconds(), getMilliseconds(),getDay() -return the components relative to the local time zone.
+time zone UTC+0: getUTCFullYear(), getUTCMonth(), getUTCDay().
+getTime()-Returns the timestamp for the date – a number of milliseconds passed from the January 1st of 1970 UTC+0.
+getTimezoneOffset()-Returns the difference between UTC and the local time zone, in minutes:
+#Setting date components
+setFullYear(year, [month], [date])
+setMonth(month, [date])
+setDate(date)
+setHours(hour, [min], [sec], [ms])
+setMinutes(min, [sec], [ms])
+setSeconds(sec, [ms])
+setMilliseconds(ms)
+setTime(milliseconds) (sets the whole date by milliseconds since 01.01.1970 UTC)
+Every one of them except setTime() has a UTC-variant, for instance: setUTCHours().
+#Autocorrection
+#Date to number, date diff
+When a Date object is converted to number, it becomes the timestamp same as date.getTime():
+The important side effect: dates can be subtracted, the result is their difference in ms.
+#Date.now()
+There’s a special method Date.now() that returns the current timestamp.
+It is semantically equivalent to new Date().getTime(), but it doesn’t create an intermediate Date object. So it’s faster and doesn’t put pressure on garbage collection.
+#JSON methods, toJSON -complex object, and we’d like to convert it into a string
+JSON for data exchange when the client uses JavaScript and the server is written on Ruby/PHP/Java/Whatever
+JSON.stringify to convert objects into JSON.result called serialized object
+JSON.parse to convert JSON back into an object.
+Please note that a JSON-encoded object has several important differences from the object literal:
+Strings use double quotes. No single quotes or backticks in JSON. So 'John' becomes "John".
+Object property names are double-quoted also. That’s obligatory. So age:30 becomes "age":30.
+
+JSON.stringify can be applied to primitives as well.
+
+JSON supports following data types:
+Objects { ... }
+Arrays [ ... ]
+Primitives:
+strings,
+numbers,
+boolean values true/false,
+null.
+JSON is data-only language-independent specification, so some JavaScript-specific object properties are skipped by JSON.stringify.
+Namely:
+Function properties (methods).
+Symbolic keys and values.
+Properties that store undefined.
+The important limitation: there must be no circular references.
+
+#Excluding and transforming: replacer
+The full syntax of JSON.stringify is:
+let json = JSON.stringify(value[, replacer, space])
+value
+A value to encode.
+replacer
+Array of properties to encode or a mapping function function(key, value).
+space
+Amount of space to use for formatting
+
+But if we need to fine-tune the replacement process, like to filter out circular references, we can use the second argument of JSON.stringify.
+If we pass an array of properties to it, only these properties will be encoded.
+
+alert( JSON.stringify(meetup, ['title', 'participants']) );
+Fortunately, we can use a function instead of an array as the replacer.
+
+The function will be called for every (key, value) pair and should return the “replaced” value, which will be used instead of the original one. Or undefined if the value is to be skipped.
+
+
+alert( JSON.stringify(meetup, function replacer(key, value) {
+  alert(`${key}: ${value}`);
+  return (key == 'occupiedBy') ? undefined : value;
+}));
+ he first (key, value) pair has an empty key, and the value is the target object as a whole.
+#Formatting : space - JSON.stringify(user, null, 4)
+#Custom “toJSON”
+
+Like toString for string conversion, an object may provide method toJSON for to-JSON conversion. JSON.stringify automatically calls it if available.JSON.stringify(meetup)
+/*
+  {
+    "title":"Conference",
+    "date":"2017-01-01T00:00:00.000Z",  // (1)
+    "room": {"number":23}               // (2)
+  }
+*/
+Now let’s add a custom toJSON for our object room (2):
+
+let room = {
+  number: 23,
+  toJSON() {
+    return this.number;
+  }
+};
+
+let meetup = {
+  title: "Conference",
+  room
+};
+
+alert( JSON.stringify(room) ); // 23
+
+alert( JSON.stringify(meetup) );
+/*
+  {
+    "title":"Conference",
+    "room": 23
+  }
+*/
+let value = JSON.parse(str[, reviver]); -To decode a JSON-string
+#Using reviver
+let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+…And now we need to deserialize it, to turn back into JavaScript object.
+
+Let’s do it by calling JSON.parse:
+
+let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+
+let meetup = JSON.parse(str);
+
+alert( meetup.date.getDate() ); // Error!
+let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+
+let meetup = JSON.parse(str, function(key, value) {
+  if (key == 'date') return new Date(value);
+  return value;
+});
+
+#Recursion and stack
+when a task can be simplified into an easy action plus a simpler variant of the same task.
+#Two ways of thinking
+Iterative thinking: the for loop:
+Recursive thinking: simplify the task and call self:
+
+              if n==1  = x
+             /
+pow(x, n) =
+             \
+              else     = x * pow(x, n - 1)
+
+If n == 1, then everything is trivial. It is called the base of recursion, because it immediately produces the obvious result: pow(x, 1) equals x.
+Otherwise, we can represent pow(x, n) as x * pow(x, n - 1).
+pow(2, 4) = 2 * pow(2, 3)
+pow(2, 3) = 2 * pow(2, 2)
+pow(2, 2) = 2 * pow(2, 1)
+pow(2, 1) = 2
+function pow(x, n) {
+  return (n == 1) ? x : (x * pow(x, n - 1));
+}, We can rely on it being 10000 calls limit
+#The execution context and stack
+The information about the process of execution of a running function is stored in its execution context.
+The execution context is an internal data structure that contains details about the execution of a function: where the control flow is now, the current variables, the value of this (we don’t use it here) and few other internal details.One function call has exactly one execution context associated with it.
+When a function makes a nested call, the following happens:
+
+The current function is paused.
+The execution context associated with it is remembered in a special data structure called execution context stack.
+The nested call executes.
+After it ends, the old execution context is retrieved from the stack, and the outer function is resumed from where it stopped.
+
+Context: { x: 2, n: 1, at line 1 } pow(2, 1)
+Context: { x: 2, n: 2, at line 5 } pow(2, 2)
+Context: { x: 2, n: 3, at line 5 } pow(2, 3)
+The exit
+Note the memory requirements. Contexts take memory. In our case, raising to the power of n actually requires the memory for n contexts, for all lower values of n.
+A loop-based algorithm is more memory-saving:
+#Recursive traversals-salary sum example
+#Recursive structures
+A recursive (recursively-defined) data structure is a structure that replicates itself in parts.
+one more recursive structure named “Linked list” that might be a better alternative for arrays in some cases.
+#Linked list-to store an ordered list of objects.
+
+…But there’s a problem with arrays. it takes time. Same with arr.shift().
+we can choose another data structure called a linked list.
+
+The linked list element is recursively defined as an object with:
+value.
+next property referencing the next linked list element or null if that’s the end.
+let list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {
+        value: 4,
+        next: null
+      }
+    }
+  }
+};
+An alternative code for creation:
+let list = { value: 1 };
+list.next = { value: 2 };
+list.next.next = { value: 3 };
+list.next.next.next = { value: 4 };
+list.next.next.next.next = null;
+
+
+The list can be easily split into multiple parts and later joined back:
+let secondList = list.next.next;
+list.next.next = null;
+To join:
+list.next.next = secondList;
+And surely we can insert or remove items in any place.
+
+For instance, to prepend a new value, we need to update the head of the list:
+let list = { value: 1 };
+list.next = { value: 2 };
+list.next.next = { value: 3 };
+list.next.next.next = { value: 4 };
+// prepend the new value to the list
+list = { value: "new item", next: list };
+To remove a value from the middle, change next of the previous one:
+list.next = list.next.next;
+The main drawback is that we can’t easily access an element by its number. In an array that’s easy: arr[n] is a direct reference. But in the list we need to start from the firts item and go next N times to get the Nth element.
+Lists can be enhanced:
+We can add property prev in addition to next to reference the previous element, to move back easily.
+We can also add a variable named tail referencing the last element of the list (and update it when adding/removing elements from the end).
+…The data structure may vary according to our needs.
+#Rest parameters and spread syntax
+#Rest parameters ...
+Many JavaScript built-in functions support an arbitrary number of arguments.
+And also, how to pass arrays to such functions as parameters.
+function sumAll(...args) { // args is the name for the array
+  for (let arg of args) 
+}
+Here the first two arguments go into variables and the rest go into titles array:
+function showName(firstName, lastName, ...titles) {
+}
+The rest parameters must be at the end
+#The “arguments” variable
+There is also a special array-like object named arguments that contains all arguments by their index.
+function showName() {
+  alert( arguments.length );
+  alert( arguments[0] );
+  alert( arguments[1] );
+  // it's iterable
+  // for(let arg of arguments) alert(arg);
+}
+// shows: 2, Julius, Caesar
+showName("Julius", "Caesar");
+it’s not an array. It does not support array methods, so we can’t call arguments.map(...) for example.
+So when we need these features, then rest parameters are preferred.
+As we remember, arrow functions don’t have their own this. Now we know they don’t have the special arguments object either.
+#Spread syntax
+Spread syntax  similar to rest parameters, also using ..., but does quite the opposite.
+When ...arr is used in the function call, it “expands” an iterable object arr into the list of arguments.
+alert( Math.max(...arr1, ...arr2) );
+Also, the spread syntax can be used to merge arrays:
+let merged = [0, ...arr, 2, ...arr2];
+any iterable will do.
+let str = "Hello";
+alert( [...str] ); // H,e,l,l,o
+The spread syntax internally uses iterators to gather elements, the same way as for..of does.
+The result is the same as [...str].
+But there’s a subtle difference between Array.from(obj) and [...obj]:
+Array.from operates on both array-likes and iterables.
+The spread syntax works only with iterables.
+So,Array.from tends to be more universal.
+#Copy an array/object
+Object.assign() in the past?
+
+It is possible to do the same thing with the spread syntax.
+let arrCopy = [...arr]; // spread the array into a list of parameters
+                        // then put the result into a new array
+// do the arrays have the same contents?
+alert(JSON.stringify(arr) === JSON.stringify(arrCopy)); // true
+// are the arrays equal?
+alert(arr === arrCopy); // false (not same reference)
+// modifying our initial array does not modify the copy:
+Note that it is possible to do the same thing to make a copy of an object:
+let objCopy = { ...obj }; // spread the object into a list of parameters
+                          // then return the result in a new object
+
+#Variable scope, closure
+#Code blocks
+Visually, let i is outside of {...}. But the for construct is special here: the variable, declared inside it, is considered a part of the block.
+#Nested functions
+What’s much more interesting, a nested function can be returned: either as a property of a new object or as a result by itself. It can then be used somewhere else. No matter where, it still has access to the same outer variables.
+
+function makeCounter() {
+  let count = 0;
+
+  return function() {
+    return count++;
+  };
+}
+let counter = makeCounter();
+alert( counter() ); // 0
+
+#Lexical Environment
+The in-depth technical explanation lies ahead.
+#Step 1. Variables
+In JavaScript, every running function, code block {...}, and the script as a whole have an internal (hidden) associated object known as the Lexical Environment.
+The Lexical Environment object consists of two parts:
+Environment Record – an object that stores all local variables as its properties (and some other information like the value of this).
+A reference to the outer lexical environment, the one associated with the outer code.
+A “variable” is just a property of the special internal object, Environment Record. “To get or change a variable” means “to get or change a property of that object”.
+When the script starts, the Lexical Environment is pre-populated with all declared variables.
+Initially, they are in the “Uninitialized” state. That’s a special internal state, it means that the engine knows about the variable, but it cannot be referenced until it has been declared with let. It’s almost the same as if the variable didn’t exist.
+Then let phrase definition appears. There’s no assignment yet, so its value is undefined. We can use the variable from this point forward.
+
+Lexical Environment is a specification object
+“Lexical Environment” is a specification object: it only exists “theoretically” in the language specification to describe how things work. We can’t get this object in our code and manipulate it directly.
+
+Step 2. Function Declarations
+A function is also a value, like a variable.
+The difference is that a Function Declaration is instantly fully initialized...
+When a Lexical Environment is created, a Function Declaration immediately becomes a ready-to-use function (unlike let, that is unusable till the declaration).
+Naturally, this behavior only applies to Function Declarations, not Function Expressions where we assign a function to a variable, such as let say = function(name)....
+
+#Step 3. Inner and outer Lexical Environment
+During the function call we have two Lexical Environments: the inner one (for the function call) and the outer one (global):
+When the code wants to access a variable – the inner Lexical Environment is searched first, then the outer one, then the more outer one and so on until the global one.
+
+Step 4. Returning a function
+function makeCounter() {
+  let count = 0;
+
+  return function() {
+    return count++;
+  };
+}
+let counter = makeCounter();
+At the beginning of each makeCounter() call, a new Lexical Environment object is created, to store variables for this makeCounter run.
+
+What’s different is that, during the execution of makeCounter(), a tiny nested function is created of only one line: return count++. We don’t run it yet, only create.
+All functions remember the Lexical Environment in which they were made. Technically, there’s no magic here: all functions have the hidden property named [[Environment]], that keeps the reference to the Lexical Environment where the function was created:
+
+That’s how the function remembers where it was created, no matter where it’s called. The [[Environment]] reference is set once and forever at function creation time.
+
+Later, when counter() is called, a new Lexical Environment is created for the call, and its outer Lexical Environment reference is taken from counter.[[Environment]]:
+
+Now when the code inside counter() looks for count variable, it first searches its own Lexical Environment (empty, as there are no local variables there), then the Lexical Environment of the outer makeCounter() call, where it finds and changes it.
+
+A variable is updated in the Lexical Environment where it lives.
+
+!Closure
+A closure is a function that remembers its outer variables and can access them. In some languages, that’s not possible, or a function should be written in a special way to make it happen. But as explained above, in JavaScript, all functions are naturally closures (there is only one exception, to be covered in The "new Function" syntax).
+That is: they automatically remember where they were created using a hidden [[Environment]] property, and then their code can access outer variables.
+#Garbage collection
+Usually, a Lexical Environment is removed from memory with all the variables after the function call finishes.
+However, if there’s a nested function that is still reachable after the end of a function, then it has [[Environment]] property that references the lexical environment.
+In that case the Lexical Environment is still reachable
+
+function f() {
+  let value = 123;
+
+  return function() {
+    alert(value);
+  }
+}
+let g = f(); // g.[[Environment]] stores a reference to the Lexical Environment
+// of the corresponding f() call
+
+A Lexical Environment object dies when it becomes unreachable (just like any other object).
+function f() {
+  let value = 123;
+
+  return function() {
+    alert(value);
+  }
+}
+let g = f(); // while g function exists, the value stays in memory
+
+g = null; // ...and now the memory is cleaned up
+
+#Real-life optimizations
+
+As we’ve seen, in theory while a function is alive, all outer variables are also retained.But in practice, JavaScript engines try to optimize that. They analyze variable usage and if it’s obvious from the code that an outer variable is not used – it is removed.
+An important side effect in V8 (Chrome, Edge, Opera) is that such variable will become unavailable in debugging.
+function f() {
+  let value = Math.random();
+
+  function g() {
+    debugger; // in console: type alert(value); No such variable!
+  }
+
+  return g;
+}
+let g = f();
+g();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

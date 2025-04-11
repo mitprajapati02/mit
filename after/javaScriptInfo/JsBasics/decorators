@@ -1,0 +1,65 @@
+**@Decorators and Forwarding, Call/Apply**
+
+### Transparent Caching
+- Cache results of function calls to avoid recalculations.
+- Example:
+  ```js
+  function cachingDecorator(func) {
+    let cache = new Map();
+    return function(x) {
+      if (cache.has(x)) return cache.get(x);
+      let result = func(x);
+      cache.set(x, result);
+      return result;
+    };
+  }
+  ```
+- Uses `func.call(this, x)` to ensure `this` is preserved.
+
+### `func.call` for Context
+- `func.call(context, arg1, arg2, …)` explicitly sets `this`.
+- Example:
+  ```js
+  
+  function cachingDecorator(func) {
+    let cache = new Map();
+    return function(x) {
+      if (cache.has(x)) return cache.get(x);
+      let result = func.call(this, x);
+      cache.set(x, result);
+      return result;
+    };
+  }
+  ```
+- Ensures correct context (`this`) in methods.
+
+### Handling Multiple Arguments
+- `func.apply(context, argsArray)` is similar but takes an array.
+- Example:
+  ```js
+  function cachingDecorator(func, hash) {
+    let cache = new Map();
+    return function() {
+      let key = hash(arguments);
+      if (cache.has(key)) return cache.get(key);
+      let result = func.apply(this, arguments);
+      cache.set(key, result);
+      return result;
+    };
+  }
+  ```
+- `hash(arguments)` creates a unique key for caching.
+
+### Function Binding (`bind`)
+- `bind` prevents loss of `this` in callbacks.
+- Example:
+  ```js
+  let user = {
+    firstName: "John",
+    sayHi() { alert(`Hello, ${this.firstName}!`); }
+  };
+  let boundSayHi = user.sayHi.bind(user);
+  setTimeout(boundSayHi, 1000); // Works correctly
+  ```
+- Useful when passing methods as callbacks.
+

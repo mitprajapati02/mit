@@ -1,0 +1,76 @@
+**Export Default in JavaScript Modules**
+
+### What is Export Default?
+- Used to export a single entity (class, function, or variable) per module.
+- Makes code cleaner and easier to navigate.
+- Only one `export default` is allowed per file.
+
+### Syntax:
+```javascript
+// 📁 user.js
+export default class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+```
+- Importing a default export does NOT require curly braces:
+```javascript
+// 📁 main.js
+import User from './user.js';
+new User('John');
+```
+
+### Default vs Named Exports
+| Named Export | Default Export |
+|-------------|---------------|
+| `export class User {}` | `export default class User {}` |
+| `import {User} from ...` | `import User from ...` |
+| Explicit, requires correct name | Can be imported under any name |
+
+### Re-exporting with Default Exports
+- Default exports need special handling during re-export.
+```javascript
+export {default as User} from './user.js';
+```
+- `export * from` does NOT re-export the default export:
+```javascript
+export * from './user.js'; // Only named exports
+export {default} from './user.js'; // Default export
+```
+
+---
+
+**Dynamic Imports in JavaScript**
+
+### Why Use Dynamic Imports?
+- Static `import` must be at the top-level and cannot be conditional.
+- `import()` allows loading modules at runtime, conditionally, or on demand.
+
+### Syntax:
+```javascript
+let modulePath = './say.js';
+import(modulePath)
+  .then(module => module.sayHi('John'))
+  .catch(err => console.log("Module loading error", err));
+```
+
+### Using `await` with Dynamic Import
+```javascript
+let { hi, bye } = await import('./say.js');
+hi(); // Hello
+bye(); // Bye
+```
+
+### Importing Default Exports Dynamically
+```javascript
+let obj = await import('./say.js');
+let say = obj.default;
+say();
+```
+
+### Key Notes:
+- Works in regular scripts, no need for `type="module"`.
+- `import()` returns a promise resolving to the module object.
+- Not a function, so cannot use `call()` or `apply()`.
+

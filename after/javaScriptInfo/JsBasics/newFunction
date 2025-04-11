@@ -1,0 +1,29 @@
+The "new Function" Syntax
+
+Syntax: let func = new Function ([arg1, arg2, ...argN], functionBody);
+Creates functions from a string at runtime.
+No closure: functions created this way have access only to global variables.
+Closure
+Functions remember their Lexical Environment where they were created.
+new Function() does not have access to outer variables, only global ones.
+
+Scheduling: setTimeout & setInterval
+setTimeout(func, delay, ...args): Runs a function once after delay.
+setInterval(func, delay, ...args): Runs a function repeatedly with delay.
+Always pass a function reference: setTimeout(sayHi, 1000); ✅ (Not sayHi())
+Canceling Timers
+clearTimeout(timerId); – Stops setTimeout.
+clearInterval(timerId); – Stops setInterval.
+Nested setTimeout (More Precise than setInterval)
+js
+Copy
+Edit
+setTimeout(function tick() {
+  alert('tick');
+  setTimeout(tick, 2000); // Ensures fixed delay
+}, 2000);
+Garbage Collection & Memory Leak Risks
+Timers keep function references alive → Cancel unused timers to free memory.
+Zero Delay setTimeout(func, 0)
+Runs after the current script finishes.
+In browsers, actual delay > 0ms due to event loop.

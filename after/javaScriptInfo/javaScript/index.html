@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dom</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="form">
+        <h1>here is Form</h1> <br />
+        <form action="" class="fillForm" id="fillForm">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" placeholder="Enter your name" value="" required> <br />
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="Enter your email" value="" required> <br />
+            <label for="gender" >gender:</label>
+            <label for="male">Male</label><input type="radio" name="gender"
+                    id="male" required><br>
+
+                <label for="female">Female</label>
+                <input type="radio" name="gender" id="female"><br>
+
+            
+            <label for="codingLang">coding Language</label>
+            <select name="codingLang" id="codingLang" required>
+                <option value="php">PHP</option>
+                <option value="js">JS</option>
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+            </select><br>
+            <button type="submit" id="submit">Submit</button>
+        </form>
+    </div>
+    <div id="output">
+        <h1>Output</h1>
+        <table id="table">
+            <thead>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Coding Language</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="learn.js">
+</script>
+
+</html>

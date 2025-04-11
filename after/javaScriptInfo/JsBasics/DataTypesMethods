@@ -1,0 +1,294 @@
+**Data Types and Methods of Primitives**
+
+### Primitive Data Types
+A primitive is a basic data type that is immutable. JavaScript has **7 primitive types**:
+- **String**
+- **Number**
+- **BigInt**
+- **Boolean**
+- **Symbol**
+- **Null**
+- **Undefined**
+
+An **Object** is a collection of key-value pairs where properties can store values, including functions.
+- Examples: Dates, Errors, HTML elements.
+
+### Primitive as an Object
+Primitive values can be temporarily treated as objects via **object wrappers** (e.g., `new String()`, `new Number()`).
+
+---
+
+## Numbers
+### Notations
+```js
+let billion = 1_000_000_000; // 1e9
+let small = 1e-3; // 0.001
+```
+
+### Number Systems
+```js
+0x1f // Hexadecimal (31)
+0b111 // Binary (7)
+0o10 // Octal (8)
+```
+
+### Conversions
+```js
+num.toString(base); // Convert number to string in base 2-36
+1234..toString(16); // Convert to hex
+```
+
+### Math Functions
+```js
+Math.floor(num);  // Round down
+Math.ceil(num);   // Round up
+Math.round(num);  // Nearest integer
+Math.trunc(num);  // Remove decimals
+num.toFixed(2);   // Rounds to 2 decimal places, returns string
+```
+
+### Number Testing
+```js
+isFinite(value);   // Checks if value is a finite number
+isNaN(value);      // Checks if value is NaN
+Number.isNaN("str"); // False (doesn't convert)
+isNaN("str"); // True (converts to NaN)
+Object.is(NaN, NaN); // True
+Object.is(0, -0); // False
+```
+
+### Parsing
+```js
+parseInt("100px");  // 100
+parseFloat("12.5em"); // 12.5
+parseInt("0xff", 16); // 255 (hex)
+parseFloat("12.3.4"); // 12.3 (stops at second dot)
+```
+
+### Other Math Functions
+```js
+Math.random(); // Random number between 0 and 1
+Math.max(a, b, c);
+Math.min(a, b, c);
+Math.pow(2, 10); // 2**10
+```
+
+---
+
+## Strings
+### Properties and Access
+```js
+str.length; // Length of string
+str[0] or str.charAt(0); // First character
+for (let char of str) {} // Iterate
+```
+
+### String Immutability
+```js
+str[0] = 'h'; // Error, strings are immutable
+```
+
+### Case Conversion
+```js
+str.toLowerCase();
+str.toUpperCase();
+```
+
+### Searching
+```js
+str.indexOf(substr, pos);
+str.lastIndexOf(substr, pos);
+str.includes(substr);
+str.startsWith(substr);
+str.endsWith(substr);
+```
+
+### Substrings
+```js
+str.slice(start, end);
+str.substring(start, end);
+str.substr(start, length);
+```
+
+### Comparison
+```js
+str1.localeCompare(str2); // 0, 1, -1
+```
+
+### Unicode
+```js
+str.codePointAt(pos);
+String.fromCodePoint(65, 90); // "AZ"
+```
+
+---
+
+## Arrays
+### Basics
+```js
+let arr = []; // Empty array
+arr.length; // Get length
+arr.at(-1); // Last element
+```
+
+### Stack & Queue Methods
+```js
+arr.push(item); // Add to end
+arr.pop(); // Remove from end
+arr.shift(); // Remove first
+arr.unshift(item); // Add to beginning
+```
+
+### Internal Behavior
+```js
+arr.length = 0; // Clear array
+new Array(n); // Creates array of length n
+arr.toString(); // Converts to comma-separated string
+```
+
+### Searching
+```js
+arr.indexOf(item, from);
+arr.includes(item, from);
+arr.find(fn);
+arr.findIndex(fn);
+```
+
+### Iteration
+```js
+arr.forEach(fn);
+arr.map(fn);
+arr.filter(fn);
+```
+
+### Sorting & Manipulation
+```js
+arr.sort((a, b) => a - b);
+arr.reverse();
+arr.slice(start, end);
+arr.splice(start, deleteCount, ...items);
+```
+
+### Combining Arrays
+```js
+arr.concat(arrayLike);
+arr.join(";"); 
+```
+
+### Reduce
+```js
+arr.reduce((sum, current) => sum + current, 0);
+```
+
+### Array Type Check
+```js
+Array.isArray(arr);
+```
+
+### Advanced
+```js
+arr.fill(value, start, end);
+arr.copyWithin(target, start, end);
+arr.flat(depth);
+```
+
+---
+
+## Iterables and Array-Likes
+### Differences
+- **Iterables**: Implement `Symbol.iterator`
+- **Array-likes**: Have `length` but no `Symbol.iterator`
+
+```js
+Array.from(arrayLike);
+Array.from(str).slice(start, end).join('');
+```
+
+---
+
+## Map and Set
+### Map (Key-Value Pairs)
+```js
+let map = new Map();
+map.set(key, value);
+map.get(key);
+map.has(key);
+map.delete(key);
+map.clear();
+map.size;
+```
+
+### Iteration
+```js
+map.keys();
+map.values();
+map.entries();
+map.forEach((value, key) => {});
+```
+
+### Converting
+```js
+let obj = Object.fromEntries(map);
+let map = new Map(Object.entries(obj));
+```
+
+### Set (Unique Values)
+```js
+let set = new Set();
+set.add(value);
+set.delete(value);
+set.has(value);
+set.clear();
+set.size;
+```
+
+### Iteration
+```js
+for (let value of set) {}
+set.forEach(value => {});
+```
+
+---
+
+## WeakMap and WeakSet
+### WeakMap (Garbage Collectable Keys)
+```js
+let weakMap = new WeakMap();
+weakMap.set(obj, value);
+weakMap.get(obj);
+weakMap.delete(obj);
+weakMap.has(obj);
+```
+
+### WeakSet (Objects Only)
+```js
+let weakSet = new WeakSet();
+weakSet.add(obj);
+weakSet.has(obj);
+weakSet.delete(obj);
+```
+
+---
+
+## Object Methods
+### Getting Properties
+```js
+Object.keys(obj);
+Object.values(obj);
+Object.entries(obj);
+```
+
+### Symbol Properties
+```js
+Object.getOwnPropertySymbols(obj);
+Reflect.ownKeys(obj);
+```
+
+### Transforming Objects
+```js
+Object.entries(obj).map(([key, value]) => [key, value * 2]);
+Object.fromEntries(array);
+```
+
+This structured format organizes concepts clearly and makes it easier to reference and learn.
+

@@ -1,0 +1,122 @@
+# Destructuring Assignment
+
+Destructuring assignment is a special syntax that allows us to “unpack” arrays or objects into a bunch of variables.
+
+## Array Destructuring
+```javascript
+let arr = ["John", "Smith"];
+let [firstName, surname] = arr;
+
+let [firstName, surname] = "John Smith".split(' ');
+```
+
+### Skipping Elements
+```javascript
+let [firstName, , title] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+```
+
+### Works with Any Iterable
+```javascript
+let [a, b, c] = "abc"; // ["a", "b", "c"]
+let [one, two, three] = new Set([1, 2, 3]);
+```
+
+### Assign to Any Variable
+```javascript
+let user = {};
+[user.name, user.surname] = "John Smith".split(' ');
+```
+
+### Swap Variables Trick
+```javascript
+[guest, admin] = [admin, guest];
+```
+
+### Using the Rest `...`
+```javascript
+let [name1, name2, ...rest] = ["Julius", "Caesar", "Consul", "of the Roman Republic"];
+// rest is an array of items starting from the 3rd one
+```
+
+### Default Values
+```javascript
+let [name = "Guest", surname = "Anonymous"] = ["Julius"];
+```
+
+## Object Destructuring
+```javascript
+let {var1, var2} = {var1: "value1", var2: "value2"};
+```
+
+### Assigning to New Variable Names
+```javascript
+let {height, width, title} = {title: "Menu", height: 200, width: 100};
+let {width: w, height: h, title} = options;
+```
+
+### Default Values in Object Destructuring
+```javascript
+let {width: w = 100, height: h = 200, title} = options;
+```
+
+### Gotcha: Parentheses Required Without `let`
+```javascript
+({title, width, height} = {title: "Menu", width: 200, height: 100});
+```
+
+## Nested Destructuring
+```javascript
+let options = {
+  size: {
+    width: 100,
+    height: 200
+  },
+  items: ["Cake", "Donut"],
+  extra: true
+};
+
+let {
+  size: {width, height},
+  items: [item1, item2],
+  extra
+} = options;
+```
+
+## Smart Function Parameters
+### Traditional Approach (Bad Practice)
+```javascript
+function showMenu(title = "Untitled", width = 200, height = 100, items = []) {
+  // ...
+}
+showMenu("My Menu", undefined, undefined, ["Item1", "Item2"]);
+```
+
+### Using Object Destructuring
+```javascript
+let options = {
+  title: "My menu",
+  items: ["Item1", "Item2"]
+};
+
+function showMenu({
+  title = "Untitled",
+  width: w = 100,  // width goes to w
+  height: h = 200, // height goes to h
+  items: [item1, item2] // items first element goes to item1, second to item2
+}) {
+  alert(`${title} ${w} ${h}`); // My Menu 100 200
+  alert(item1); // Item1
+  alert(item2); // Item2
+}
+
+showMenu(options);
+```
+
+### Handling Default Values for Entire Object
+```javascript
+function showMenu({ title = "Menu", width = 100, height = 200 } = {}) {
+  alert(`${title} ${width} ${height}`);
+}
+showMenu(); // Menu 100 200
+```
+

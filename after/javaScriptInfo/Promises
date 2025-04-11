@@ -1,0 +1,139 @@
+# Thenables and Promises
+
+## Thenables
+A *thenable* is an object with a `.then` method, making it behave like a promise. JavaScript treats such objects as promises.
+
+```javascript
+class Thenable {
+  constructor(num) {
+    this.num = num;
+  }
+  then(resolve, reject) {
+    setTimeout(() => resolve(this.num * 2), 1000);
+  }
+}
+
+new Promise(resolve => resolve(1))
+  .then(result => new Thenable(result))
+  .then(alert); // Shows 2 after 1000ms
+```
+
+## Promise API
+JavaScript's `Promise` class has six static methods:
+
+1. **Promise.all(promises)** - Waits for all promises to resolve and returns an array of their results. If any promise rejects, it fails immediately.
+2. **Promise.allSettled(promises)** - Waits for all promises to settle and returns an array with their status (`fulfilled` or `rejected`).
+3. **Promise.race(promises)** - Resolves or rejects as soon as the first promise settles.
+4. **Promise.any(promises)** - Resolves as soon as the first promise is fulfilled; rejects only if all promises fail.
+5. **Promise.resolve(value)** - Creates a resolved promise with the given value.
+6. **Promise.reject(error)** - Creates a rejected promise with the given error.
+
+### Example: Using `Promise.all`
+```javascript
+Promise.all([
+  new Promise(resolve => setTimeout(() => resolve(1), 3000)),
+  new Promise(resolve => setTimeout(() => resolve(2), 2000)),
+  new Promise(resolve => setTimeout(() => resolve(3), 1000))
+]).then(alert); // Shows [1, 2, 3] after 3 seconds
+```
+
+## Async/Await
+
+### Async Functions
+The `async` keyword makes a function return a promise. Non-promise values are automatically wrapped in `Promise.resolve`.
+
+```javascript
+async function f() {
+  return 1;
+}
+
+f().then(alert); // 1
+```
+
+### Await
+The `await` keyword pauses execution until a promise resolves.
+
+```javascript
+async function f() {
+  let promise = new Promise(resolve => setTimeout(() => resolve("done!"), 1000));
+  let result = await promise;
+  alert(result); // "done!"
+}
+f();
+```
+
+### Awaiting Thenables
+The `await` keyword can also work with *thenables*.
+
+```javascript
+class Thenable {
+  constructor(num) {
+    this.num = num;
+  }
+  then(resolve, reject) {
+    setTimeout(() => resolve(this.num * 2), 1000);
+  }
+}
+
+async function f() {
+  let result = await new Thenable(1);
+  alert(result); // 2 after 1000ms
+}
+
+f();
+```
+
+### Async Class Methods
+Class methods can also be async:
+
+```javascript
+class Waiter {
+  async wait() {
+    return await Promise.resolve(1);
+  }
+}
+
+new Waiter()
+  .wait()
+  .then(alert); // 1
+```
+
+### Using Async/Await for Fetch API
+Fetching and processing JSON using async/await:
+
+```javascript
+async function showAvatar() {
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+  let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+  let githubUser = await githubResponse.json();
+
+  let img = document.createElement('img');
+  img.src = githubUser.avatar_url;
+  img.className = "promise-avatar-example";
+  document.body.append(img);
+
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  img.remove();
+
+  return githubUser;
+}
+
+showAvatar();
+```
+
+### Async IIFE (Immediately Invoked Function Expression)
+For older browsers or when not using modules, wrap async calls in an immediately invoked function:
+
+```javascript
+(async () => {
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+})();
+```
+
+This ensures async/await can be used even in script files where `await` isn't allowed globally.
+
+---
+This document provides a structured summary of JavaScript promises, thenables, and async/await, ensuring clarity and readability.
+

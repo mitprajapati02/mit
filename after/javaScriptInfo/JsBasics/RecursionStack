@@ -1,0 +1,254 @@
+**# Recursion and Stack**
+
+Recursion occurs when a task can be broken down into an easier action plus a simpler variant of the same task.
+
+### Two Ways of Thinking
+
+1. **Iterative Thinking:** Using loops, like a `for` loop.
+2. **Recursive Thinking:** Simplifying the task and calling itself recursively.
+
+#### Example: Power Function
+
+```javascript
+function pow(x, n) {
+  return (n == 1) ? x : (x * pow(x, n - 1));
+}
+```
+
+The function recursively calls itself until it reaches the base case, `pow(x, 1) = x`.
+
+Example breakdown of `pow(2, 4)`:
+
+```
+pow(2, 4) = 2 * pow(2, 3)
+pow(2, 3) = 2 * pow(2, 2)
+pow(2, 2) = 2 * pow(2, 1)
+pow(2, 1) = 2
+```
+
+### Execution Context and Stack
+
+When a function runs, its execution details (such as control flow, variables, and parameters) are stored in an **execution context**. Each function call has its own execution context, stored in a **call stack**. When a nested call occurs:
+
+1. The current function pauses.
+2. Its execution context is pushed onto the stack.
+3. The nested function executes.
+4. Once done, the previous execution context is popped and resumed.
+
+Example execution stack:
+
+```
+Context: { x: 2, n: 1 } → pow(2, 1)
+Context: { x: 2, n: 2 } → pow(2, 2)
+Context: { x: 2, n: 3 } → pow(2, 3)
+```
+
+#### Memory Considerations
+
+Recursive calls use memory because each function call remains in the stack until resolved. A loop-based solution is more memory efficient.
+
+---
+
+## Recursive Structures
+
+A **recursive data structure** is one that partially replicates itself.
+
+### Linked List
+
+A **linked list** is a recursively defined object where each element has:
+
+- A `value`
+- A `next` property pointing to the next element (or `null` if it’s the last)
+
+#### Example:
+
+```javascript
+let list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {
+        value: 4,
+        next: null
+      }
+    }
+  }
+};
+```
+
+#### Alternative Creation:
+
+```javascript
+let list = { value: 1 };
+list.next = { value: 2 };
+list.next.next = { value: 3 };
+list.next.next.next = { value: 4 };
+list.next.next.next.next = null;
+```
+
+### Modifying a Linked List
+
+- **Splitting a List:**
+  ```javascript
+  let secondList = list.next.next;
+  list.next.next = null;
+  ```
+- **Joining Lists:**
+  ```javascript
+  list.next.next = secondList;
+  ```
+- **Prepending an Element:**
+  ```javascript
+  list = { value: "new", next: list };
+  ```
+- **Removing an Element:**
+  ```javascript
+  list.next = list.next.next;
+  ```
+
+### Pros and Cons of Linked Lists
+
+- **Pros:** Efficient insertions/removals.
+- **Cons:** Accessing an element by index is slow (`O(n)` time complexity).
+
+---
+
+## Rest Parameters and Spread Syntax
+
+### Rest Parameters (`...`)
+
+Allows functions to accept an arbitrary number of arguments.
+
+```javascript
+function sumAll(...args) {
+  for (let arg of args) console.log(arg);
+}
+sumAll(1, 2, 3, 4); // Output: 1, 2, 3, 4
+```
+
+### The `arguments` Object
+
+`arguments` is an array-like object containing all passed arguments.
+
+```javascript
+function showName() {
+  console.log(arguments.length);
+  console.log(arguments[0]);
+}
+showName("Julius", "Caesar"); // Output: 2, Julius
+```
+
+**Difference:**
+
+- `arguments` is **not an array** (no `.map()`, `.forEach()` methods).
+- `rest parameters` (`...args`) create real arrays.
+
+### Spread Syntax (`...`)
+
+Expands an iterable into individual elements.
+
+```javascript
+let arr1 = [1, 2, 3];
+let arr2 = [4, 5, 6];
+let merged = [...arr1, ...arr2]; // [1, 2, 3, 4, 5, 6]
+```
+
+**Copying Arrays/Objects:**
+
+```javascript
+let arrCopy = [...arr];
+let objCopy = { ...obj };
+```
+
+---
+
+## Variable Scope and Closure
+
+### Lexical Environment
+
+Each function has a **Lexical Environment**, which stores:
+
+1. Local variables
+2. A reference to its parent environment
+
+#### Example:
+
+```javascript
+function makeCounter() {
+  let count = 0;
+  return function() {
+    return count++;
+  };
+}
+let counter = makeCounter();
+console.log(counter()); // 0
+```
+
+### Closures
+
+A **closure** is a function that remembers its outer variables.
+
+```javascript
+function f() {
+  let value = 123;
+  return function() {
+    console.log(value);
+  };
+}
+let g = f();
+g(); // 123
+```
+
+Closures allow functions to retain access to variables even after the outer function has finished executing.
+
+---
+
+## Garbage Collection
+
+When a function completes, its **Lexical Environment** is usually removed from memory. However, if a nested function retains access to its outer scope, the environment persists.
+
+**Example:**
+
+```javascript
+function f() {
+  let value = 123;
+  return function() {
+    console.log(value);
+  };
+}
+let g = f();
+g(); // 123
+```
+
+Once `g = null`, the memory is freed.
+
+### Optimization in JavaScript Engines
+
+Modern engines optimize variable retention, ensuring that unused variables are removed from memory during execution.
+
+```javascript
+function f() {
+  let value = Math.random();
+  function g() {
+    console.log(value);
+  }
+  return g;
+}
+let g = f();
+g();
+```
+
+If a variable is not accessed, it might be optimized away in debugging tools.
+
+---
+
+## Summary
+
+- **Recursion** simplifies problems by breaking them into smaller versions of themselves.
+- **Execution Context & Call Stack** manage recursive calls.
+- **Linked Lists** provide efficient insertions/deletions but slow index access.
+- **Rest and Spread Syntax** improve handling of multiple arguments and copying data.
+- **Closures** enable functions to remember variables from their defining scope.
+- **Garbage Collection** removes unused lexical environments to optimize memory.

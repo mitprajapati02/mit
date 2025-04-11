@@ -1,0 +1,53 @@
+### **Function Object & Named Function Expression (NFE)**  
+
+#### **1. `name` Property**  
+- Returns function’s name, even for default parameters:  
+  ```js
+  function f(sayHi = function() {}) {
+    alert(sayHi.name); // sayHi
+  }
+  f();
+  ```
+- Functions inside arrays have an empty `name`:  
+  ```js
+  let arr = [function() {}];
+  alert(arr[0].name); // ""
+  ```
+
+#### **2. `length` Property**  
+- Returns the number of function parameters (excluding rest parameters).  
+  ```js
+  function ask(question, ...handlers) {
+    alert(handlers.length); // Counts only named parameters
+  }
+  ```
+
+#### **3. Functions as Objects**  
+- Functions can have properties:  
+  ```js
+  function sayHi() {
+    alert("Hi");
+    sayHi.counter++;
+  }
+  sayHi.counter = 0;
+  sayHi();
+  sayHi();
+  alert(`Called ${sayHi.counter} times`); // 2
+  ```
+- Function properties **are not local variables**; they persist across calls.  
+
+#### **4. Named Function Expressions (NFE)**  
+- A function can reference itself using an internal name:  
+  ```js
+  let sayHi = function func(who) {
+    if (who) {
+      alert(`Hello, ${who}`);
+    } else {
+      func("Guest"); // Works fine
+    }
+  };
+  sayHi();
+  ```
+- The function name `func` is local and does not depend on outer variables.  
+- Unlike function expressions, **Function Declarations do not support internal names**.
+

@@ -1,0 +1,248 @@
+**JavaScript Essentials: Key Concepts & Syntax**
+
+### **Data Types** (8 Basic)
+
+1. **Number**: `Infinity`, `-Infinity`, `NaN`
+2. **BigInt**
+3. **String**
+4. **Boolean**
+5. **null**
+6. **undefined**
+7. **Objects**
+8. **Symbols**
+
+### **Type Checking**
+
+- `typeof value` - Returns the type of a value.
+
+### **User Interaction**
+
+- `alert("message")` - Shows a message.
+- `result = prompt(title, [default])` - Asks for user input.
+- `isVariable = confirm("message?")` - Asks a yes/no question.
+
+---
+
+### **Type Conversions**
+
+- `String(value)` - Converts value to string.
+- `Number(value)` - Converts value to number.
+- `Boolean(value)` - Converts value to boolean.
+- `+value` - Unary plus operator (converts to number).
+- `!!value` - Double NOT (converts to boolean).
+
+---
+
+### **Basic Operators & Math**
+
+- `+`, `-`, `*`, `/`, `%`, `**` (Exponentiation)
+- String Concatenation: `"Hello" + "World" → "HelloWorld"`
+- `a = b = c = 2 + 2;` (Assignment chaining)
+- Modify-in-place: `+=`, `-=`, `*=`, `/=`, `%=`
+- Increment/Decrement: `++`, `--` (Prefix & Postfix)
+- Bitwise Operators: `&`, `|`, `^`, `~`, `<<`, `>>`
+- Comma Operator: `a = (1 + 2, 3 + 4); // a = 7`
+
+---
+
+### **Comparisons**
+
+- `>`, `<`, `>=`, `<=`, `==`, `!=`, `===`, `!==`
+- String Comparison (Unicode-based)
+- `null == undefined` → `true`, but `null === undefined` → `false`
+- `null` in math operations → `0`, `undefined` → `NaN`
+
+---
+
+### **Conditional Branching**
+
+- `if`, `else if`, `else`
+- Ternary operator: `let result = condition ? value1 : value2;`
+- Multiple ternary operators: `(a > b) ? b : (a > c) ? c : a;`
+
+---
+
+### **Logical Operators**
+
+- **OR (**``**)**: Returns first truthy value, else last operand.
+- **AND (**``**)**: Returns first falsy value, else last operand.
+- **NOT (**``**)**: Converts to boolean (`!!value` ensures Boolean conversion).
+- **Nullish Coalescing (**`??`**)**: Returns first defined value.
+
+---
+
+### **Loops**
+
+- `while (condition) {}`
+- `do { } while (condition);`
+- `for (initialization; condition; iteration) {}`
+- `break;` (Exit loop)
+- `continue;` (Skip iteration)
+- Labels: `labelName: for (...) { break labelName; }`
+
+---
+
+### **Switch Statement**
+
+```js
+switch (value) {
+    case option1:
+        // Code
+        break;
+    case option2:
+        // Code
+        break;
+    default:
+        // Code
+}
+```
+
+---
+
+### **Functions**
+
+#### **Function Declaration**
+
+```js
+function name(params) { body }
+```
+
+#### **Function Expression**
+
+```js
+let name = function(params) { body };
+```
+
+#### **Arrow Function**
+
+```js
+let name = (params) => body;
+```
+
+#### **Default Parameters**
+
+```js
+function greet(name = "Guest") { console.log("Hello, " + name); }
+```
+
+#### **Function Expression vs Declaration**
+
+- **Declaration**: Hoisted, can be called before definition.
+- **Expression**: Not hoisted, defined at runtime.
+
+#### **Arrow Functions vs Regular Functions**
+
+- No `this` binding (inherits from surrounding scope).
+- Cannot be used as a constructor.
+- No `arguments` object.
+
+---
+
+### **Objects**
+
+#### **Creating Objects**
+
+```js
+let obj = {}; // Object Literal
+let obj2 = new Object(); // Constructor
+```
+
+#### **Adding & Deleting Properties**
+
+```js
+obj.key = value;
+delete obj.key;
+```
+
+#### **Computed Properties**
+
+```js
+let key = "name";
+let user = { [key]: "John" }; // { name: "John" }
+```
+
+#### **Checking Property Existence**
+
+```js
+"key" in obj // true or false
+```
+
+#### **Looping Over Objects**
+
+```js
+for (let key in obj) {
+    console.log(key, obj[key]);
+}
+```
+
+#### **Object References & Copying**
+
+- Objects are stored by reference.
+- Copying an object variable only copies the reference.
+- `Object.assign(dest, ...sources)` for shallow copying.
+- `structuredClone(obj)` for deep cloning (no function support).
+- `_.cloneDeep(obj)` (Lodash) for deep cloning with functions.
+
+---
+
+### **Object Methods & **``** Keyword**
+
+- Object methods can be declared inside objects.
+
+```js
+let user = {
+    name: "John",
+    sayHi() {
+        console.log(this.name);
+    }
+};
+```
+
+- `this` refers to the object calling the method.
+- Arrow functions do **not** have their own `this`.
+
+---
+
+### **Constructor Functions & **``** Operator**
+
+```js
+function User(name) {
+    this.name = name;
+    this.isAdmin = false;
+}
+let user = new User("Jack");
+```
+
+- `new` creates a new object and assigns `this` to it.
+- Constructor functions **must** start with an uppercase letter.
+- If a constructor returns an object, that object is returned instead of `this`.
+
+---
+
+### **Optional Chaining (**`?.`**)**
+
+```js
+let user = {};
+console.log(user?.address?.street); // Undefined, no error
+```
+
+- Avoids errors when accessing deep object properties.
+- Can be used with functions: `user?.sayHi?.();`
+- Cannot be used for assignments: `user?.name = "John";` (Error)
+- Can be used with `delete`: `delete user?.name;`
+
+---
+
+### **Summary**
+
+- JavaScript has **primitive** (Number, String, Boolean, etc.) and **reference** (Objects) types.
+- `typeof` checks data types.
+- Type conversions: `String()`, `Number()`, `Boolean()`.
+- Operators include math (`+`, `-`, `*`, etc.), comparison (`>`, `<`, `===`, etc.), and logical (`||`, `&&`, `!`).
+- Loops (`for`, `while`, `do-while`) and conditionals (`if`, `switch`).
+- Functions can be **declared**, **expressed**, or **arrow functions**.
+- Objects store key-value pairs and can have methods.
+- `` depends on how a function is called.
+- **Optional chaining (**``**)** safely accesses nested properties.
+
+This guide provides a quick reference for JavaScript's most essential concepts and syntax.
